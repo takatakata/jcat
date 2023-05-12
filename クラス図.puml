@@ -1,0 +1,157 @@
+@startuml
+class org.jcat.core.input.FileInput {
++ void close()
+}
+class org.jcat.plugin.impl.ShowEndsPlugin {
++ String replaceLine(StreamContext,String)
+}
+class org.jcat.plugin.impl.SqueezeBlankPlugin {
++ String replaceLine(StreamContext,String)
+}
+interface org.jcat.core.input.IInput {
++ String read()
++ void close()
++ String setEncode(String)
++ String getEncode()
+}
+class org.jcat.core.input.StandardInput {
++ void close()
+}
+class org.jcat.core.stream.StreamContext {
++ CatOption getOption()
++ void setOption(CatOption)
++ String getLineCurrent()
++ void setLineCurrent(String)
++ String getLineNext()
++ void setLineNext(String)
++ boolean isSeekFinished()
++ void setSeekFinished(boolean)
++ long getLineNumInput()
++ void setLineNumInput(long)
++ long incrementLineNumInput()
++ long getLineNumOutput()
++ void setLineNumOutput(long)
++ long incrementLineNumOutput()
+}
+abstract class org.jcat.core.stream.AbstractJCatStream {
++ boolean next()
++ boolean hasNext()
++ String readLine()
++ void write(String)
++ void writeLine(String)
++ void open()
++ void close()
++ I getInput()
++ O getOutput()
++ StreamContext getContext()
+}
+abstract class org.jcat.core.output.AbstractOutput {
++ void write(byte[])
++ void close()
++ String setEncode(String)
++ String getEncode()
++ String getLineFeed()
++ void setLineFeed(String)
+}
+class org.jcat.plugin.PluginHolder {
++ String processPlugins(StreamContext,String)
+}
+class org.jcat.core.output.FileOutput {
++ void close()
+}
+interface org.jcat.core.stream.IJCatStream {
++ O getOutput()
++ I getInput()
++ void open()
++ void close()
++ boolean next()
++ boolean hasNext()
++ String readLine()
++ void write(String)
++ void writeLine(String)
++ StreamContext getContext()
+}
+class org.jcat.core.CatOption {
++ void setShowAll(boolean)
++ void setNumberNonBlank(boolean)
++ void setShowEnds(boolean)
++ void setNumber(boolean)
++ void setSqueezeBlank(boolean)
++ void setEquivalentToVE(boolean)
++ void setEquivalentToVT(boolean)
++ void setShowTabs(boolean)
++ void setIgnored(boolean)
++ void setShowNonPrinting(boolean)
++ void setShowHelp(boolean)
++ void setShowVersion(boolean)
++ void addFileList(String)
++ boolean isShowAll()
++ boolean isNumberNonBlank()
++ boolean isShowEnds()
++ boolean isNumber()
++ boolean isSqueezeBlank()
++ boolean isEquivalentToVE()
++ boolean isEquivalentToVT()
++ boolean isShowTabs()
++ boolean isIgnored()
++ boolean isShowNonPrinting()
++ boolean isShowHelp()
++ boolean isShowVersion()
++ List<String> getFileList()
+}
+class org.jcat.core.stream.JCatStream {
+}
+abstract class org.jcat.plugin.AbstractPlugin {
++ String replace(StreamContext,String)
+}
+class org.jcat.plugin.impl.ShowNumberNonBlankPlugin {
++ String replaceLine(StreamContext,String)
+}
+abstract class org.jcat.core.input.AbstractInput {
++ String read()
++ String getEncode()
++ String setEncode(String)
++ void close()
+}
+interface org.jcat.core.output.IOutput {
++ void write(byte[])
++ void close()
++ String setEncode(String)
++ String getEncode()
++ void setLineFeed(String)
++ String getLineFeed()
+}
+class org.jcat.plugin.impl.ShowNumberPlugin {
++ String replaceLine(StreamContext,String)
+}
+class org.jcat.JCatApp {
++ void exec()
++ {static} void main(String[])
+}
+class org.jcat.plugin.impl.ShowTabsPlugin {
++ String replaceLine(StreamContext,String)
+}
+class org.jcat.core.output.StandardOutput {
++ void close()
+}
+interface org.jcat.plugin.IPlugin {
++ String replace(StreamContext,String)
+}
+
+
+org.jcat.core.input.AbstractInput <|-- org.jcat.core.input.FileInput
+org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.ShowEndsPlugin
+org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.SqueezeBlankPlugin
+org.jcat.core.input.FileInput <|-- org.jcat.core.input.StandardInput
+org.jcat.core.stream.IJCatStream <|.. org.jcat.core.stream.AbstractJCatStream
+org.jcat.core.output.IOutput <|.. org.jcat.core.output.AbstractOutput
+org.jcat.core.output.AbstractOutput <|-- org.jcat.core.output.FileOutput
+java.io.Closeable <|-- org.jcat.core.stream.IJCatStream
+org.jcat.core.stream.AbstractJCatStream <|-- org.jcat.core.stream.JCatStream
+org.jcat.plugin.IPlugin <|.. org.jcat.plugin.AbstractPlugin
+org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.ShowNumberNonBlankPlugin
+org.jcat.core.input.IInput <|.. org.jcat.core.input.AbstractInput
+org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.ShowNumberPlugin
+org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.ShowTabsPlugin
+org.jcat.core.output.FileOutput <|-- org.jcat.core.output.StandardOutput
+@enduml
