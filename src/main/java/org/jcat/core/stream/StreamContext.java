@@ -5,7 +5,7 @@ import org.jcat.core.CatOption;
 public class StreamContext {
     private CatOption option;
     private long lineNumInput = 0;
-    private long lineNumOutput = 1;
+    private long lineNumOutput = 0;
     private String lineCurrent = null;
     private String lineNext = null;
     private boolean seekFinished = false;

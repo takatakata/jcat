@@ -1,7 +1,8 @@
 package org.jcat.plugin;
 
-import org.jcat.core.stream.StreamContext;
+import org.jcat.core.CatOption;
 
 public interface IPlugin {
-    public String replace(StreamContext context, String src);
+	public void setOption(CatOption option);
+	public boolean isEnabled();
 }

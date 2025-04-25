@@ -9,8 +9,6 @@ public class CatOption {
     private boolean showEnds = false;
     private boolean number = false;
     private boolean squeezeBlank = false;
-    private boolean equivalentToVT = false;
-    private boolean equivalentToVE = false;
     private boolean showTabs = false;
     private boolean ignored = false;
     private boolean showNonPrinting = false;
@@ -28,9 +26,15 @@ public class CatOption {
             switch (arg) {
                 case "-A":
                     showAll = true;
+                    showEnds = true;
+                    showTabs = true;
+                    showNonPrinting = true;
                     break;
                 case "--show-all":
                     showAll = true;
+                    showEnds = true;
+                    showTabs = true;
+                    showNonPrinting = true;
                     break;
                 case "-b":
                     numberNonBlank = true;
@@ -39,7 +43,8 @@ public class CatOption {
                     numberNonBlank = true;
                     break;
                 case "-e":
-                    equivalentToVE = true;
+                    showNonPrinting = true;
+                    showEnds = true;
                     break;
                 case "-E":
                     showEnds = true;
@@ -72,7 +77,8 @@ public class CatOption {
                     showNonPrinting = true;
                     break;
                 case "-t":
-                    equivalentToVT = true;
+                    showNonPrinting = true;
+                    showTabs = true;
                     break;
                 case "-u":
                     ignored = true;
@@ -108,14 +114,6 @@ public class CatOption {
 
     public void setSqueezeBlank(boolean squeezeBlank) {
         this.squeezeBlank = squeezeBlank;
-    }
-
-    public void setEquivalentToVE(boolean equivalentToVE) {
-        this.equivalentToVE = equivalentToVE;
-    }
-
-    public void setEquivalentToVT(boolean equivalentToVT) {
-        this.equivalentToVT = equivalentToVT;
     }
 
     public void setShowTabs(boolean showTabs) {
@@ -160,14 +158,6 @@ public class CatOption {
 
     public boolean isSqueezeBlank() {
         return squeezeBlank;
-    }
-
-    public boolean isEquivalentToVE() {
-        return equivalentToVE;
-    }
-
-    public boolean isEquivalentToVT() {
-        return equivalentToVT;
     }
 
     public boolean isShowTabs() {

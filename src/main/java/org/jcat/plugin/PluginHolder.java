@@ -1,15 +1,12 @@
 package org.jcat.plugin;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jcat.core.CatOption;
 import org.jcat.core.stream.StreamContext;
-import org.jcat.plugin.impl.ShowEndsPlugin;
-import org.jcat.plugin.impl.ShowNumberNonBlankPlugin;
-import org.jcat.plugin.impl.ShowNumberPlugin;
-import org.jcat.plugin.impl.ShowTabsPlugin;
-import org.jcat.plugin.impl.SqueezeBlankPlugin;
 
 /**
  * 下記オプション未対応。
@@ -21,42 +18,46 @@ import org.jcat.plugin.impl.SqueezeBlankPlugin;
  */
 public class PluginHolder {
 
-    private Set<IPlugin> plugins = new LinkedHashSet<>();
+	protected CatOption option;
+	protected Set<IReplacePlugin> replacePlugins = new LinkedHashSet<>();
+	protected Set<IHelpPlugin> helpPlugins = new LinkedHashSet<>();
 
-    public PluginHolder() {
-    }
+	public PluginHolder() {
+	}
 
-    public PluginHolder(CatOption option) {
-        this();
-        registPlugins(option);
-    }
+	public PluginHolder(CatOption option) {
+		this();
+		this.option = option;
+	}
 
-    protected void registPlugins(CatOption option) {
-        if (option.isSqueezeBlank()) {
-            addPlugin(new SqueezeBlankPlugin(true));
-        }
-        if (option.isShowTabs()) {
-            addPlugin(new ShowTabsPlugin());
-        }
-        if (option.isNumber()) {
-            addPlugin(new ShowNumberPlugin());
-        }
-        if (option.isNumberNonBlank()) {
-            addPlugin(new ShowNumberNonBlankPlugin());
-        }
-        if (option.isShowEnds()) {
-            addPlugin(new ShowEndsPlugin());
-        }
-    }
+	public void addReplacePlugin(IReplacePlugin plugins[]) {
+		replacePlugins.addAll(Arrays.asList(plugins));
+		Arrays.asList(plugins).forEach(plugin -> {
+			plugin.setOption(option);
+		});
+	}
 
-    protected void addPlugin(IPlugin plugin) {
-        plugins.add(plugin);
-    }
+	public void addHelpPlugin(IHelpPlugin plugins[]) {
+		helpPlugins.addAll(Arrays.asList(plugins));
+		Arrays.asList(plugins).forEach(plugin -> {
+			plugin.setOption(option);
+		});
+	}
 
-    public String processPlugins(StreamContext context, String line) {
-        for (IPlugin plugin : plugins) {
-            line = plugin.replace(context, line);
-        }
-        return line;
-    }
+	public void showOptions() {
+		for (IHelpPlugin plugin : helpPlugins) {
+			plugin.show();
+		}
+	}
+
+	public String replace(StreamContext context, String line) {
+		for (IReplacePlugin plugin : replacePlugins) {
+			line = plugin.replace(context, line);
+		}
+		return line;
+	}
+	
+	public boolean existsHelpPlugins() {
+		return helpPlugins.stream().filter(plugin -> plugin.isEnabled()).collect(Collectors.toList()).size() > 0;
+	}
 }

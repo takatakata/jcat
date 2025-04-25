@@ -14,7 +14,7 @@ public class FileInput extends AbstractInput {
     }
 
     public FileInput(String path) throws FileNotFoundException {
-        if ("-".equals(path)) {
+        if (path == null || "".equals(path) || "-".equals(path)) {
             is = new BufferedReader(new InputStreamReader(System.in));
         } else {
             is = new BufferedReader(new FileReader(path));

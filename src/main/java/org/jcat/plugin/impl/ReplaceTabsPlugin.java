@@ -1,0 +1,29 @@
+package org.jcat.plugin.impl;
+
+import java.util.regex.Pattern;
+
+import org.jcat.core.stream.StreamContext;
+import org.jcat.plugin.AbstractReplacePlugin;
+
+public class ReplaceTabsPlugin extends AbstractReplacePlugin {
+
+    private static final Pattern PATTERN_TABS = Pattern.compile("\t");
+
+    public ReplaceTabsPlugin() {
+    	super();
+    }
+
+    @Override
+    public String replaceLine(StreamContext context, String src) {
+    	if (isEnabled()) {
+            return PATTERN_TABS.matcher(src).replaceAll("^I");
+    	} else {
+    		return src;
+    	}
+    }
+    
+	@Override
+	public boolean isEnabled() {
+		return option.isShowTabs();
+	}
+}
