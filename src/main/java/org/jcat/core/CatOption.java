@@ -96,46 +96,6 @@ public class CatOption {
         }
     }
 
-    public void setShowAll(boolean showAll) {
-        this.showAll = showAll;
-    }
-
-    public void setNumberNonBlank(boolean numberNonBlank) {
-        this.numberNonBlank = numberNonBlank;
-    }
-
-    public void setShowEnds(boolean showEnds) {
-        this.showEnds = showEnds;
-    }
-
-    public void setNumber(boolean number) {
-        this.number = number;
-    }
-
-    public void setSqueezeBlank(boolean squeezeBlank) {
-        this.squeezeBlank = squeezeBlank;
-    }
-
-    public void setShowTabs(boolean showTabs) {
-        this.showTabs = showTabs;
-    }
-
-    public void setIgnored(boolean ignored) {
-        this.ignored = ignored;
-    }
-
-    public void setShowNonPrinting(boolean showNonPrinting) {
-        this.showNonPrinting = showNonPrinting;
-    }
-
-    public void setShowHelp(boolean showHelp) {
-        this.showHelp = showHelp;
-    }
-
-    public void setShowVersion(boolean showVersion) {
-        this.showVersion = showVersion;
-    }
-
     public void addFileList(String path) {
         this.fileList.add(path);
     }
