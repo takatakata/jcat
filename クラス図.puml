@@ -2,17 +2,26 @@
 class org.jcat.core.stream.JCatStream {
 }
 abstract class org.jcat.core.input.AbstractInput {
+# String encode
+# BufferedReader is
 + String read()
 + String getEncode()
 + String setEncode(String)
 + void close()
 }
 
+
 class org.jcat.core.output.StandardOutput {
-+ void close()
+}
+class org.jcat.AppTest {
++ {static} Test suite()
++ void testApp()
 }
 
 abstract class org.jcat.core.stream.AbstractJCatStream {
+# I input
+# O output
+# StreamContext context
 + boolean next()
 + boolean hasNext()
 + String readLine()
@@ -25,15 +34,20 @@ abstract class org.jcat.core.stream.AbstractJCatStream {
 + StreamContext getContext()
 }
 
+
+class org.jcat.core.stream.GlobalContext {
++ long getLineNumOutput()
++ void setLineNumOutput(long)
++ long incrementLineNumOutput()
+}
+
 class org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin {
 + String replaceLine(StreamContext,String)
 + boolean isEnabled()
 }
 
 class org.jcat.core.output.FileOutput {
-+ void close()
 }
-
 class org.jcat.plugin.impl.ReplaceTabsPlugin {
 + String replaceLine(StreamContext,String)
 + boolean isEnabled()
@@ -44,8 +58,15 @@ interface org.jcat.plugin.IPlugin {
 + boolean isEnabled()
 }
 
+interface org.jcat.plugin.IUsagePlugin {
++ void usage()
+}
+
 class org.jcat.core.input.StandardInput {
-+ void close()
+}
+class org.jcat.plugin.impl.UsageHelpPlugin {
++ void show()
++ boolean isEnabled()
 }
 
 class org.jcat.plugin.impl.ReplaceNumberPlugin {
@@ -59,41 +80,40 @@ class org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin {
 }
 
 class org.jcat.plugin.PluginHolder {
+# CatOption option
+# Set<IReplacePlugin> replacePlugins
+# Set<IUsagePlugin> usagePlugins
 + void addReplacePlugin(IReplacePlugin[])
-+ void addHelpPlugin(IHelpPlugin[])
-+ void showOptions()
++ void addUsagePlugin(IUsagePlugin[])
++ void usage()
 + String replace(StreamContext,String)
-+ boolean existsHelpPlugins()
 }
 
-class org.jcat.JCatApp {
+
+abstract class org.jcat.plugin.AbstractReplacePlugin {
++ String replace(StreamContext,String)
+# {abstract}String replaceLine(StreamContext,String)
+}
+
+abstract class org.jcat.plugin.AbstractUsagePlugin {
++ void usage()
+# {abstract}void show()
+}
+
+class org.jcat.JCat {
 + void exec()
 + {static} void main(String[])
 }
 
-abstract class org.jcat.plugin.AbstractReplacePlugin {
-+ String replace(StreamContext,String)
-}
-
-class org.jcat.plugin.impl.CommandVersionPlugin {
-+ void show()
-+ boolean isEnabled()
-}
-
-class org.jcat.plugin.impl.CommandHelpPlugin {
-+ void show()
-+ boolean isEnabled()
-}
-
 class org.jcat.core.input.FileInput {
-+ void close()
 }
-
 interface org.jcat.plugin.IReplacePlugin {
 + String replace(StreamContext,String)
 }
 
 class org.jcat.core.CatOption {
++ boolean isUsageEnabled()
++ List<String> getFileList()
 + void addFileList(String)
 + boolean isShowAll()
 + boolean isNumberNonBlank()
@@ -105,7 +125,6 @@ class org.jcat.core.CatOption {
 + boolean isShowNonPrinting()
 + boolean isShowHelp()
 + boolean isShowVersion()
-+ List<String> getFileList()
 }
 
 interface org.jcat.core.input.IInput {
@@ -143,14 +162,20 @@ interface org.jcat.core.stream.IJCatStream {
 }
 
 abstract class org.jcat.plugin.AbstractPlugin {
+# CatOption option
 + void setOption(CatOption)
 }
 
-interface org.jcat.plugin.IHelpPlugin {
+
+class org.jcat.plugin.impl.UsageVersionPlugin {
 + void show()
++ boolean isEnabled()
 }
 
 abstract class org.jcat.core.output.AbstractOutput {
+# String encode
+# String lineFeed
+# OutputStream os
 + void write(byte[])
 + void close()
 + String setEncode(String)
@@ -158,6 +183,7 @@ abstract class org.jcat.core.output.AbstractOutput {
 + String getLineFeed()
 + void setLineFeed(String)
 }
+
 
 class org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin {
 + String replaceLine(StreamContext,String)
@@ -185,26 +211,28 @@ class org.jcat.core.stream.StreamContext {
 
 org.jcat.core.stream.AbstractJCatStream <|-- org.jcat.core.stream.JCatStream
 org.jcat.core.input.IInput <|.. org.jcat.core.input.AbstractInput
-org.jcat.core.output.FileOutput <|-- org.jcat.core.output.StandardOutput
+org.jcat.core.output.AbstractOutput <|-- org.jcat.core.output.StandardOutput
+junit.framework.TestCase <|-- org.jcat.AppTest
 org.jcat.core.stream.IJCatStream <|.. org.jcat.core.stream.AbstractJCatStream
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin
 org.jcat.core.output.AbstractOutput <|-- org.jcat.core.output.FileOutput
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceTabsPlugin
-org.jcat.core.input.FileInput <|-- org.jcat.core.input.StandardInput
+org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IUsagePlugin
+org.jcat.core.input.AbstractInput <|-- org.jcat.core.input.StandardInput
+org.jcat.plugin.AbstractUsagePlugin <|-- org.jcat.plugin.impl.UsageHelpPlugin
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceNumberPlugin
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin
 org.jcat.plugin.IReplacePlugin <|.. org.jcat.plugin.AbstractReplacePlugin
 org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.AbstractReplacePlugin
-org.jcat.plugin.IHelpPlugin <|.. org.jcat.plugin.impl.CommandVersionPlugin
-org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.CommandVersionPlugin
-org.jcat.plugin.IHelpPlugin <|.. org.jcat.plugin.impl.CommandHelpPlugin
-org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.impl.CommandHelpPlugin
+org.jcat.plugin.IUsagePlugin <|.. org.jcat.plugin.AbstractUsagePlugin
+org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.AbstractUsagePlugin
 org.jcat.core.input.AbstractInput <|-- org.jcat.core.input.FileInput
 org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IReplacePlugin
+java.io.Closeable <|-- org.jcat.core.input.IInput
+java.io.Closeable <|-- org.jcat.core.output.IOutput
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceEndsPlugin
-java.io.Closeable <|-- org.jcat.core.stream.IJCatStream
 org.jcat.plugin.IPlugin <|.. org.jcat.plugin.AbstractPlugin
-org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IHelpPlugin
+org.jcat.plugin.AbstractUsagePlugin <|-- org.jcat.plugin.impl.UsageVersionPlugin
 org.jcat.core.output.IOutput <|.. org.jcat.core.output.AbstractOutput
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin
 @enduml

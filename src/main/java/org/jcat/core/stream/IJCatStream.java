@@ -1,12 +1,11 @@
 package org.jcat.core.stream;
 
-import java.io.Closeable;
 import java.io.IOException;
 
 import org.jcat.core.input.IInput;
 import org.jcat.core.output.IOutput;
 
-public interface IJCatStream<I extends IInput, O extends IOutput> extends Closeable {
+public interface IJCatStream<I extends IInput, O extends IOutput> {
     public O getOutput();
 
     public I getInput();

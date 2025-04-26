@@ -8,6 +8,7 @@ import org.jcat.core.input.FileInput;
 import org.jcat.core.input.IInput;
 import org.jcat.core.output.IOutput;
 import org.jcat.core.output.StandardOutput;
+import org.jcat.core.stream.GlobalContext;
 import org.jcat.core.stream.IJCatStream;
 import org.jcat.core.stream.JCatStream;
 import org.jcat.plugin.IReplacePlugin;
@@ -23,20 +24,18 @@ import org.jcat.plugin.impl.UsageHelpPlugin;
 import org.jcat.plugin.impl.UsageVersionPlugin;
 
 /**
- * JCatApp
+ * JCat
  */
 public class JCat {
     private static final int EXIT_SUCCESS = 0;
     private static final int EXIT_FAILURE = 1;
 
     private CatOption option;
-    private IOutput output;
     private PluginHolder pluginHolder;
 
     public JCat(String[] args) throws FileNotFoundException {
 
         this.option = new CatOption(args);
-        this.output = new StandardOutput("\r\n");
         this.pluginHolder = new PluginHolder(option);
 
         this.pluginHolder.addUsagePlugin(new IUsagePlugin[] {
@@ -54,39 +53,42 @@ public class JCat {
         });
     }
 
-    public void usage() throws IOException {
-        if (pluginHolder.isUsageEnabled()) {
-            pluginHolder.usage();
-        }
+    public void exec() throws IOException {
+        if (option.isUsageEnabled()) usage();
+        if (!option.isUsageEnabled()) cat();
     }
 
-    public void cat() throws IOException {
-        if (pluginHolder.isUsageEnabled()) {
-            return;
-        }
-        for (String path : option.getFileList()) {
-            IInput input = new FileInput(path);
-            try (IJCatStream<?, ?> stream = new JCatStream<IInput, IOutput>(
-                    this.option, input, this.output)) {
-                while (stream.next()) {
-                    String line = stream.readLine();
-                    line = pluginHolder.replace(stream.getContext(), line);
-                    if (line == null) {
-                        continue;
+    private void usage() throws IOException {
+        pluginHolder.usage();
+    }
+
+    private void cat() throws IOException {
+        try (IOutput output = new StandardOutput("\r\n")) {
+            GlobalContext context = new GlobalContext();
+            for (String path : option.getFileList()) {
+                try (IInput input = new FileInput(path)) {
+                    IJCatStream<IInput, IOutput> stream 
+                        = new JCatStream<>(context, option, input, output);
+                    while (stream.next()) {
+                        String line = stream.readLine();
+                        line = pluginHolder.replace(stream.getContext(), line);
+                        if (line == null) {
+                            continue;
+                        }
+                        stream.writeLine(line);
                     }
-                    stream.writeLine(line);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
                 }
-            } catch (IOException e) {
-                throw e;
             }
         }
     }
 
     public static void main(String[] args) {
         try {
-            JCat cat = new JCat(args);
-            cat.usage();
-            cat.cat();
+            JCat app = new JCat(args);
+            app.exec();
             System.exit(EXIT_SUCCESS);
         } catch (Throwable e) {
             e.printStackTrace();

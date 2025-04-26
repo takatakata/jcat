@@ -13,7 +13,7 @@ public class FileInput extends AbstractInput {
     }
 
     public FileInput(String path) throws FileNotFoundException {
-    	super(new BufferedReader(new FileReader(path)));
+        super(new BufferedReader(new FileReader(path)));
     }
 
     public FileInput(InputStream is) throws FileNotFoundException {

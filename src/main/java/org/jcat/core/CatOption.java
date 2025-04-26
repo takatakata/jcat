@@ -103,6 +103,14 @@ public class CatOption {
         }
     }
 
+    public boolean isUsageEnabled() {
+        return isShowHelp() || isShowVersion();
+    }
+
+    public List<String> getFileList() {
+        return fileList;
+    }
+    
     public void addFileList(String path) {
         this.fileList.add(path);
     }
@@ -147,7 +155,4 @@ public class CatOption {
         return showVersion;
     }
 
-    public List<String> getFileList() {
-        return fileList;
-    }
 }

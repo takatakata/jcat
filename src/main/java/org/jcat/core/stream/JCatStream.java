@@ -10,7 +10,7 @@ public class JCatStream<I extends IInput, O extends IOutput> extends AbstractJCa
         super();
     }
 
-    public JCatStream(CatOption option, I input, O output) {
-        super(option, input, output);
+    public JCatStream(GlobalContext context, CatOption option, I input, O output) {
+        super(context, option, input, output);
     }
 }

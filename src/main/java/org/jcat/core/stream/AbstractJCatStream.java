@@ -13,14 +13,13 @@ public abstract class AbstractJCatStream<I extends IInput, O extends IOutput> im
     protected StreamContext context;
 
     public AbstractJCatStream() {
-        context = new StreamContext();
     }
 
-    public AbstractJCatStream(CatOption option, I input, O output) {
+    public AbstractJCatStream(GlobalContext context, CatOption option, I input, O output) {
         this();
         this.input = input;
         this.output = output;
-        this.context.setOption(option);
+        this.context = new StreamContext(context, option);
     }
 
     @Override

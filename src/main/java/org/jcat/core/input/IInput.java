@@ -1,8 +1,9 @@
 package org.jcat.core.input;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-public interface IInput {
+public interface IInput extends Closeable {
     public String read() throws IOException;
 
     public void close() throws IOException;

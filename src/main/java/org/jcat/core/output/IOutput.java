@@ -1,8 +1,9 @@
 package org.jcat.core.output;
 
+import java.io.Closeable;
 import java.io.IOException;
 
-public interface IOutput {
+public interface IOutput extends Closeable {
     public void write(byte[] data) throws IOException;
 
     public void close() throws IOException;

@@ -59,8 +59,4 @@ public class PluginHolder {
         }
         return line;
     }
-
-    public boolean isUsageEnabled() {
-        return usagePlugins.size() > 0;
-    }
 }

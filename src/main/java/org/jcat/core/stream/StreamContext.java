@@ -4,8 +4,9 @@ import org.jcat.core.CatOption;
 
 public class StreamContext {
     private CatOption option;
+    private GlobalContext context;
+
     private long lineNumInput = 0;
-    private long lineNumOutput = 0;
     private String lineCurrent = null;
     private String lineNext = null;
     private boolean seekFinished = false;
@@ -13,8 +14,9 @@ public class StreamContext {
     public StreamContext() {
     }
 
-    public StreamContext(CatOption option) {
+    public StreamContext(GlobalContext context, CatOption option) {
         this.option = option;
+        this.context = context;
     }
 
     public CatOption getOption() {
@@ -60,16 +62,16 @@ public class StreamContext {
     public long incrementLineNumInput() {
         return ++lineNumInput;
     }
-
+    
     public long getLineNumOutput() {
-        return lineNumOutput;
+        return context.getLineNumOutput();
     }
 
     public void setLineNumOutput(long lineNumOutput) {
-        this.lineNumOutput = lineNumOutput;
+        context.setLineNumOutput(lineNumOutput);
     }
 
     public long incrementLineNumOutput() {
-        return ++lineNumOutput;
+        return context.incrementLineNumOutput();
     }
 }
