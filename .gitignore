@@ -3,3 +3,10 @@
 /Data8277.csv_jcat
 /Data8277.csv_jcat-n
 /target
+/bin
+/.settings
+/.classpath
+/.project
+/.idea/compiler.xml
+/.idea/encodings.xml
+/.idea/jarRepositories.xml
