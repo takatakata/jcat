@@ -3,7 +3,6 @@ package org.jcat.plugin;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.jcat.core.CatOption;
 import org.jcat.core.stream.StreamContext;
@@ -31,16 +30,20 @@ public class PluginHolder {
     }
 
     public void addReplacePlugin(IReplacePlugin plugins[]) {
-        replacePlugins.addAll(Arrays.asList(plugins));
         Arrays.asList(plugins).forEach(plugin -> {
             plugin.setOption(option);
+            if (plugin.isEnabled()) {
+                replacePlugins.add(plugin);
+            }
         });
     }
 
     public void addHelpPlugin(IHelpPlugin plugins[]) {
-        helpPlugins.addAll(Arrays.asList(plugins));
         Arrays.asList(plugins).forEach(plugin -> {
             plugin.setOption(option);
+            if (plugin.isEnabled()) {
+                helpPlugins.add(plugin);
+            }
         });
     }
 
@@ -58,6 +61,6 @@ public class PluginHolder {
     }
 
     public boolean existsUsages() {
-        return helpPlugins.stream().filter(plugin -> plugin.isEnabled()).collect(Collectors.toList()).size() > 0;
+        return helpPlugins.size() > 0;
     }
 }
