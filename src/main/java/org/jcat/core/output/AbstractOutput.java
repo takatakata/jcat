@@ -1,6 +1,5 @@
 package org.jcat.core.output;
 
-import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,7 +11,6 @@ public abstract class AbstractOutput implements IOutput {
     protected OutputStream os;
 
     public AbstractOutput() {
-        os = new BufferedOutputStream(System.out);
     }
 
     public AbstractOutput(OutputStream bos) throws FileNotFoundException {

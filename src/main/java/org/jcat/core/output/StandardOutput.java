@@ -1,21 +1,16 @@
 package org.jcat.core.output;
 
+import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
-public class StandardOutput extends FileOutput {
+public class StandardOutput extends AbstractOutput {
 
     public StandardOutput() throws FileNotFoundException {
-        super();
+        super(new BufferedOutputStream(System.out));
     }
 
     public StandardOutput(String lineFeed) throws FileNotFoundException {
         this();
         setLineFeed(lineFeed);
-    }
-
-    @Override
-    public void close() throws IOException {
-        super.close();
     }
 }

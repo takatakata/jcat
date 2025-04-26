@@ -2,7 +2,6 @@ package org.jcat.core.input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public abstract class AbstractInput implements IInput {
 
@@ -10,7 +9,10 @@ public abstract class AbstractInput implements IInput {
     protected BufferedReader is;
 
     public AbstractInput() {
-        is = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public AbstractInput(BufferedReader is) {
+    	this.is = is;
     }
 
     @Override

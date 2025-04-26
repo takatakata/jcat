@@ -4,10 +4,10 @@ import org.jcat.core.stream.StreamContext;
 
 public abstract class AbstractReplacePlugin extends AbstractPlugin implements IReplacePlugin {
 
-	public AbstractReplacePlugin() {
-		super();
+    public AbstractReplacePlugin() {
+        super();
     }
-    
+
     @Override
     public final String replace(StreamContext context, String src) {
         if (src == null) {
@@ -15,6 +15,6 @@ public abstract class AbstractReplacePlugin extends AbstractPlugin implements IR
         }
         return replaceLine(context, src);
     }
-    
+
     protected abstract String replaceLine(StreamContext context, String src);
 }

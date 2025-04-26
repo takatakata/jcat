@@ -62,7 +62,6 @@ public abstract class AbstractJCatStream<I extends IInput, O extends IOutput> im
         }
     }
 
-
     @Override
     public boolean hasNext() {
         return !context.isSeekFinished();

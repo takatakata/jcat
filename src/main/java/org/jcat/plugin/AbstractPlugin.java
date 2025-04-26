@@ -4,12 +4,12 @@ import org.jcat.core.CatOption;
 
 public abstract class AbstractPlugin implements IPlugin {
 
-	protected CatOption option;
+    protected CatOption option;
 
-	public AbstractPlugin() {
-	}
+    public AbstractPlugin() {
+    }
 
-	public void setOption(CatOption option) {
-		this.option = option;
-	}
+    public void setOption(CatOption option) {
+        this.option = option;
+    }
 }
