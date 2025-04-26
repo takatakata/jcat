@@ -19,7 +19,7 @@ public class PluginHolder {
 
     protected CatOption option;
     protected Set<IReplacePlugin> replacePlugins = new LinkedHashSet<>();
-    protected Set<IHelpPlugin> helpPlugins = new LinkedHashSet<>();
+    protected Set<IUsagePlugin> usagePlugins = new LinkedHashSet<>();
 
     public PluginHolder() {
     }
@@ -38,18 +38,18 @@ public class PluginHolder {
         });
     }
 
-    public void addHelpPlugin(IHelpPlugin plugins[]) {
+    public void addUsagePlugin(IUsagePlugin plugins[]) {
         Arrays.asList(plugins).forEach(plugin -> {
             plugin.setOption(option);
             if (plugin.isEnabled()) {
-                helpPlugins.add(plugin);
+                usagePlugins.add(plugin);
             }
         });
     }
 
-    public void showUsages() {
-        for (IHelpPlugin plugin : helpPlugins) {
-            plugin.show();
+    public void usage() {
+        for (IUsagePlugin plugin : usagePlugins) {
+            plugin.usage();
         }
     }
 
@@ -60,7 +60,7 @@ public class PluginHolder {
         return line;
     }
 
-    public boolean existsUsages() {
-        return helpPlugins.size() > 0;
+    public boolean isUsageEnabled() {
+        return usagePlugins.size() > 0;
     }
 }

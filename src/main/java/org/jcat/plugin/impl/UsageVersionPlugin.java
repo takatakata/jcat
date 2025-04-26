@@ -1,9 +1,8 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.plugin.AbstractPlugin;
-import org.jcat.plugin.IHelpPlugin;
+import org.jcat.plugin.AbstractUsagePlugin;
 
-public class CommandVersionPlugin extends AbstractPlugin implements IHelpPlugin {
+public class UsageVersionPlugin extends AbstractUsagePlugin {
 
 	private static final String VERSION = "jcat 1.0-SNAPSHOT\n" +
 			"Copyright (C) 2023 takatakata.\n" +
@@ -13,15 +12,13 @@ public class CommandVersionPlugin extends AbstractPlugin implements IHelpPlugin 
 			"            \n" +
 			"Written by takatakata.";
 
-	public CommandVersionPlugin() {
+	public UsageVersionPlugin() {
 		super();
 	}
 		
 	@Override
 	public void show() {
-		if (isEnabled()) {
-			System.out.println(VERSION);
-		}
+		System.out.println(VERSION);
 	}
 	
 	@Override

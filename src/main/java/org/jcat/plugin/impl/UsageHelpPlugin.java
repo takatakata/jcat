@@ -1,9 +1,8 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.plugin.AbstractPlugin;
-import org.jcat.plugin.IHelpPlugin;
+import org.jcat.plugin.AbstractUsagePlugin;
 
-public class CommandHelpPlugin extends AbstractPlugin implements IHelpPlugin {
+public class UsageHelpPlugin extends AbstractUsagePlugin {
 
 	private static final String HELP_MESSAGE = "Usage: java -cp /path/to/classes org.jcat.JCatApp [OPTION]... [FILE]...\n"
 			+
@@ -29,15 +28,13 @@ public class CommandHelpPlugin extends AbstractPlugin implements IHelpPlugin {
 			+
 			"  java -cp /path/to/classes org.jcat.JCatApp        Copy standard input to standard output.";
 
-	public CommandHelpPlugin() {
+	public UsageHelpPlugin() {
 		super();
 	}
 
 	@Override
 	public void show() {
-		if (isEnabled()) {
-			System.out.println(HELP_MESSAGE);
-		}
+		System.out.println(HELP_MESSAGE);
 	}
 
 	@Override

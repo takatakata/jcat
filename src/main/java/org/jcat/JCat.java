@@ -10,17 +10,17 @@ import org.jcat.core.output.IOutput;
 import org.jcat.core.output.StandardOutput;
 import org.jcat.core.stream.IJCatStream;
 import org.jcat.core.stream.JCatStream;
-import org.jcat.plugin.IHelpPlugin;
 import org.jcat.plugin.IReplacePlugin;
+import org.jcat.plugin.IUsagePlugin;
 import org.jcat.plugin.PluginHolder;
-import org.jcat.plugin.impl.CommandHelpPlugin;
-import org.jcat.plugin.impl.CommandVersionPlugin;
 import org.jcat.plugin.impl.ReplaceEndsPlugin;
 import org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin;
 import org.jcat.plugin.impl.ReplaceNumberPlugin;
 import org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin;
 import org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin;
 import org.jcat.plugin.impl.ReplaceTabsPlugin;
+import org.jcat.plugin.impl.UsageHelpPlugin;
+import org.jcat.plugin.impl.UsageVersionPlugin;
 
 /**
  * JCatApp
@@ -39,9 +39,9 @@ public class JCat {
         this.output = new StandardOutput("\r\n");
         this.pluginHolder = new PluginHolder(option);
 
-        this.pluginHolder.addHelpPlugin(new IHelpPlugin[] {
-                new CommandHelpPlugin(),
-                new CommandVersionPlugin()
+        this.pluginHolder.addUsagePlugin(new IUsagePlugin[] {
+                new UsageHelpPlugin(),
+                new UsageVersionPlugin()
         });
 
         this.pluginHolder.addReplacePlugin(new IReplacePlugin[] {
@@ -55,14 +55,13 @@ public class JCat {
     }
 
     public void usage() throws IOException {
-        if (pluginHolder.existsUsages()) {
-            pluginHolder.showUsages();
+        if (pluginHolder.isUsageEnabled()) {
+            pluginHolder.usage();
         }
     }
 
     public void cat() throws IOException {
-
-        if (pluginHolder.existsUsages()) {
+        if (pluginHolder.isUsageEnabled()) {
             return;
         }
         for (String path : option.getFileList()) {

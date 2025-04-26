@@ -14,12 +14,8 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(StreamContext context, String src) {
-    	if (isEnabled()) {
-    		context.incrementLineNumOutput();
-    		return String.format("%6d  ", context.getLineNumOutput()) + src;
-    	} else {
-    		return src;
-    	}
+		context.incrementLineNumOutput();
+		return String.format("%6d  ", context.getLineNumOutput()) + src;
     }
     
 	@Override

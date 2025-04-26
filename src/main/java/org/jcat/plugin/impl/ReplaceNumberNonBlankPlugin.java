@@ -14,7 +14,7 @@ public class ReplaceNumberNonBlankPlugin extends AbstractReplacePlugin {
 
 	@Override
 	public String replaceLine(StreamContext context, String src) {
-		if (!isEnabled() || "".equals(context.getLineCurrent())) {
+		if ("".equals(context.getLineCurrent())) {
 			//現在行が空行のときは何もしない
 			return src;
 		}

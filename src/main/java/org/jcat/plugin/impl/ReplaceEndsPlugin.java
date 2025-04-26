@@ -11,11 +11,7 @@ public class ReplaceEndsPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(StreamContext context, String src) {
-    	if (isEnabled()) {
-            return src + "$";
-    	} else {
-    		return src;
-    	}
+        return src + "$";
     }
 
 	@Override

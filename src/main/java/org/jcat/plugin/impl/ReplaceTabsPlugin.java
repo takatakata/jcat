@@ -15,11 +15,7 @@ public class ReplaceTabsPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(StreamContext context, String src) {
-    	if (isEnabled()) {
-            return PATTERN_TABS.matcher(src).replaceAll("^I");
-    	} else {
-    		return src;
-    	}
+        return PATTERN_TABS.matcher(src).replaceAll("^I");
     }
     
 	@Override
