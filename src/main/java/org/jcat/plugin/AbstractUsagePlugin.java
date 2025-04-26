@@ -7,7 +7,7 @@ public abstract class AbstractUsagePlugin extends AbstractPlugin implements IUsa
     }
 
     @Override
-    public final void usage() {
+    public void usage() {
         if (isEnabled()) {
             show();
         }
