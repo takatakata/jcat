@@ -2,7 +2,7 @@ package org.jcat.plugin.impl;
 
 import java.util.regex.Pattern;
 
-import org.jcat.core.stream.StreamContext;
+import org.jcat.core.context.StreamContext;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceTabsPlugin extends AbstractReplacePlugin {

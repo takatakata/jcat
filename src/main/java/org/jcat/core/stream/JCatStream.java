@@ -1,16 +1,16 @@
 package org.jcat.core.stream;
 
 import org.jcat.core.CatOption;
+import org.jcat.core.context.GlobalContext;
 import org.jcat.core.input.IInput;
-import org.jcat.core.output.IOutput;
 
-public class JCatStream<I extends IInput, O extends IOutput> extends AbstractJCatStream<I, O> {
+public class JCatStream<I extends IInput> extends AbstractJCatStream<I> {
 
     public JCatStream() {
         super();
     }
 
-    public JCatStream(GlobalContext context, CatOption option, I input, O output) {
-        super(context, option, input, output);
+    public JCatStream(GlobalContext context, CatOption option, I input) {
+        super(context, option, input);
     }
 }

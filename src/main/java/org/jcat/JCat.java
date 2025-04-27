@@ -4,11 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.jcat.core.CatOption;
+import org.jcat.core.context.GlobalContext;
 import org.jcat.core.input.FileInput;
 import org.jcat.core.input.IInput;
 import org.jcat.core.output.IOutput;
 import org.jcat.core.output.StandardOutput;
-import org.jcat.core.stream.GlobalContext;
 import org.jcat.core.stream.IJCatStream;
 import org.jcat.core.stream.JCatStream;
 import org.jcat.plugin.IReplacePlugin;
@@ -67,15 +67,15 @@ public class JCat {
             GlobalContext context = new GlobalContext();
             for (String path : option.getFileList()) {
                 try (IInput input = new FileInput(path)) {
-                    IJCatStream<IInput, IOutput> stream 
-                        = new JCatStream<>(context, option, input, output);
+                    IJCatStream<IInput> stream 
+                        = new JCatStream<>(context, option, input);
                     while (stream.next()) {
                         String line = stream.readLine();
                         line = pluginHolder.replace(stream.getContext(), line);
                         if (line == null) {
                             continue;
                         }
-                        stream.writeLine(line);
+                        output.writeLine(line);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

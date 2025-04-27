@@ -1,4 +1,4 @@
-package org.jcat.core.stream;
+package org.jcat.core.context;
 
 import org.jcat.core.CatOption;
 

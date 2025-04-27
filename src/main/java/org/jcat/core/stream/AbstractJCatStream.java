@@ -3,22 +3,21 @@ package org.jcat.core.stream;
 import java.io.IOException;
 
 import org.jcat.core.CatOption;
+import org.jcat.core.context.GlobalContext;
+import org.jcat.core.context.StreamContext;
 import org.jcat.core.input.IInput;
-import org.jcat.core.output.IOutput;
 
-public abstract class AbstractJCatStream<I extends IInput, O extends IOutput> implements IJCatStream<I, O> {
+public abstract class AbstractJCatStream<I extends IInput> implements IJCatStream<I> {
 
     protected I input;
-    protected O output;
     protected StreamContext context;
 
     public AbstractJCatStream() {
     }
 
-    public AbstractJCatStream(GlobalContext context, CatOption option, I input, O output) {
+    public AbstractJCatStream(GlobalContext context, CatOption option, I input) {
         this();
         this.input = input;
-        this.output = output;
         this.context = new StreamContext(context, option);
     }
 
@@ -72,33 +71,17 @@ public abstract class AbstractJCatStream<I extends IInput, O extends IOutput> im
     }
 
     @Override
-    public void write(String line) throws IOException {
-        output.write(line.getBytes(output.getEncode()));
-    }
-
-    @Override
-    public void writeLine(String line) throws IOException {
-        write(line + output.getLineFeed());
-    }
-
-    @Override
     public void open() {
     }
 
     @Override
     public void close() throws IOException {
         input.close();
-        output.close();
     }
 
     @Override
     public I getInput() {
         return this.input;
-    }
-
-    @Override
-    public O getOutput() {
-        return this.output;
     }
 
     public StreamContext getContext() {

@@ -5,6 +5,10 @@ import java.io.IOException;
 
 public interface IOutput extends Closeable {
     public void write(byte[] data) throws IOException;
+    
+    public void write(String line) throws IOException;
+
+    public void writeLine(String line) throws IOException;
 
     public void close() throws IOException;
 

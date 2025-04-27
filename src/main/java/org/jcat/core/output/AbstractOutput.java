@@ -23,6 +23,17 @@ public abstract class AbstractOutput implements IOutput {
     }
 
     @Override
+    public void write(String line) throws IOException {
+        os.write(line.getBytes());
+    };
+
+    @Override
+    public void writeLine(String line) throws IOException {
+        os.write(line.getBytes());
+        os.write(lineFeed.getBytes());
+    };
+    
+    @Override
     public void close() throws IOException {
         os.flush();
         os.close();

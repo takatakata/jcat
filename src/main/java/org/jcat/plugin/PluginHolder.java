@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jcat.core.CatOption;
-import org.jcat.core.stream.StreamContext;
+import org.jcat.core.context.StreamContext;
 
 /**
  * 下記オプション未対応。
