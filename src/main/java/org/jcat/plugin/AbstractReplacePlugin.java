@@ -10,7 +10,7 @@ public abstract class AbstractReplacePlugin extends AbstractPlugin implements IR
 
     @Override
     public final String replace(StreamContext context, String src) {
-        if (!isEnabled() || src == null) {
+        if (src == null) {
             return src;
         }
         return replaceLine(context, src);
