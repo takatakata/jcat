@@ -13,7 +13,7 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(StreamContext context, String src) {
-    	return convert(src);
+    	return convertAsASCII(src);
     }
     
 	@Override
@@ -76,9 +76,44 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
      *         }
      *     }
      */
-	private String convert(String src) {
-	    StringBuffer buf = new StringBuffer();
-        try (IntStream input = src.codePoints()) {
+//	private String convertAsCodepoint(String src) {
+//	    StringBuffer buf = new StringBuffer();
+//        try (IntStream input = src.codePoints()) {
+//            input.forEach(ch -> {
+//                if (ch >= 32) {
+//                    if (ch < 127) {
+//                        buf.appendCodePoint(ch);
+//                    } else if (ch == 127) {
+//                        buf.append("^?");
+//                    } else {
+//                        if (ch >= 128 + 32) {
+//                            if (ch < 128 + 127) {
+//                                buf.append("M-");
+//                                buf.appendCodePoint(ch - 128);
+//                            } else {
+//                                // treat ch as a Unicode character, not just an ASCII character 
+//                                // original code: `buf.append("^?")`
+//                                buf.appendCodePoint(ch);
+//                            }
+//                        } else {
+//                            buf.append("M-");
+//                            buf.append("^").appendCodePoint(ch - 128 + 64);
+//                        }
+//                    }
+//                } else if (ch == '\t' && !option.isShowTabs()) {
+//                    buf.append("\t");
+//                } else if (ch == '\n') {
+//                    buf.append("\n");
+//                } else {
+//                    buf.append("^").appendCodePoint(ch + 64);
+//                }
+//            });
+//        }
+//        return buf.toString();
+//	}
+    private String convertAsASCII(String src) {
+        StringBuffer buf = new StringBuffer();
+        try (IntStream input = src.chars()) {
             input.forEach(ch -> {
                 if (ch >= 32) {
                     if (ch < 127) {
@@ -93,6 +128,7 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
                             } else {
                                 // treat ch as a Unicode character, not just an ASCII character 
                                 // original code: `buf.append("^?")`
+                                //buf.appendCodePoint(ch);
                                 buf.appendCodePoint(ch);
                             }
                         } else {
@@ -110,5 +146,5 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
             });
         }
         return buf.toString();
-	}
+    }
 }

@@ -6,10 +6,8 @@ public class StreamContext {
     private CatOption option;
     private GlobalContext context;
 
-    private long lineNumInput = 0;
+    private String linePrevious = null;
     private String lineCurrent = null;
-    private String lineNext = null;
-    private boolean seekFinished = false;
 
     public StreamContext() {
     }
@@ -17,6 +15,15 @@ public class StreamContext {
     public StreamContext(GlobalContext context, CatOption option) {
         this.option = option;
         this.context = context;
+    }
+    
+    public void addLine(String line) {
+        if (lineCurrent == null) {
+            lineCurrent = line;
+        } else {
+            linePrevious = lineCurrent;
+            lineCurrent = line;
+        }
     }
 
     public CatOption getOption() {
@@ -26,7 +33,14 @@ public class StreamContext {
     public void setOption(CatOption option) {
         this.option = option;
     }
+    
+    public String getLinePrevious() {
+        return linePrevious;
+    }
 
+    public void setLinePrevious(String linePrevious) {
+        this.linePrevious = linePrevious;
+    }
     public String getLineCurrent() {
         return lineCurrent;
     }
@@ -35,34 +49,6 @@ public class StreamContext {
         this.lineCurrent = lineCurrent;
     }
 
-    public String getLineNext() {
-        return lineNext;
-    }
-
-    public void setLineNext(String lineNext) {
-        this.lineNext = lineNext;
-    }
-
-    public boolean isSeekFinished() {
-        return seekFinished;
-    }
-
-    public void setSeekFinished(boolean seekFinished) {
-        this.seekFinished = seekFinished;
-    }
-
-    public long getLineNumInput() {
-        return lineNumInput;
-    }
-
-    public void setLineNumInput(long lineNum) {
-        this.lineNumInput = lineNum;
-    }
-
-    public long incrementLineNumInput() {
-        return ++lineNumInput;
-    }
-    
     public long getLineNumOutput() {
         return context.getLineNumOutput();
     }

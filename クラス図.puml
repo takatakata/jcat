@@ -1,6 +1,4 @@
 @startuml
-class org.jcat.core.stream.JCatStream {
-}
 abstract class org.jcat.core.input.AbstractInput {
 # String encode
 # BufferedReader is
@@ -16,29 +14,6 @@ class org.jcat.core.output.StandardOutput {
 class org.jcat.AppTest {
 + {static} Test suite()
 + void testApp()
-}
-
-abstract class org.jcat.core.stream.AbstractJCatStream {
-# I input
-# O output
-# StreamContext context
-+ boolean next()
-+ boolean hasNext()
-+ String readLine()
-+ void write(String)
-+ void writeLine(String)
-+ void open()
-+ void close()
-+ I getInput()
-+ O getOutput()
-+ StreamContext getContext()
-}
-
-
-class org.jcat.core.stream.GlobalContext {
-+ long getLineNumOutput()
-+ void setLineNumOutput(long)
-+ long incrementLineNumOutput()
 }
 
 class org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin {
@@ -136,6 +111,8 @@ interface org.jcat.core.input.IInput {
 
 interface org.jcat.core.output.IOutput {
 + void write(byte[])
++ void write(String)
++ void writeLine(String)
 + void close()
 + String setEncode(String)
 + String getEncode()
@@ -143,22 +120,22 @@ interface org.jcat.core.output.IOutput {
 + String getLineFeed()
 }
 
+class org.jcat.core.context.StreamContext {
++ void addLine(String)
++ CatOption getOption()
++ void setOption(CatOption)
++ String getLinePrevious()
++ void setLinePrevious(String)
++ String getLineCurrent()
++ void setLineCurrent(String)
++ long getLineNumOutput()
++ void setLineNumOutput(long)
++ long incrementLineNumOutput()
+}
+
 class org.jcat.plugin.impl.ReplaceEndsPlugin {
 + String replaceLine(StreamContext,String)
 + boolean isEnabled()
-}
-
-interface org.jcat.core.stream.IJCatStream {
-+ O getOutput()
-+ I getInput()
-+ void open()
-+ void close()
-+ boolean next()
-+ boolean hasNext()
-+ String readLine()
-+ void write(String)
-+ void writeLine(String)
-+ StreamContext getContext()
 }
 
 abstract class org.jcat.plugin.AbstractPlugin {
@@ -177,6 +154,8 @@ abstract class org.jcat.core.output.AbstractOutput {
 # String lineFeed
 # OutputStream os
 + void write(byte[])
++ void write(String)
++ void writeLine(String)
 + void close()
 + String setEncode(String)
 + String getEncode()
@@ -190,18 +169,7 @@ class org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin {
 + boolean isEnabled()
 }
 
-class org.jcat.core.stream.StreamContext {
-+ CatOption getOption()
-+ void setOption(CatOption)
-+ String getLineCurrent()
-+ void setLineCurrent(String)
-+ String getLineNext()
-+ void setLineNext(String)
-+ boolean isSeekFinished()
-+ void setSeekFinished(boolean)
-+ long getLineNumInput()
-+ void setLineNumInput(long)
-+ long incrementLineNumInput()
+class org.jcat.core.context.GlobalContext {
 + long getLineNumOutput()
 + void setLineNumOutput(long)
 + long incrementLineNumOutput()
@@ -209,11 +177,9 @@ class org.jcat.core.stream.StreamContext {
 
 
 
-org.jcat.core.stream.AbstractJCatStream <|-- org.jcat.core.stream.JCatStream
 org.jcat.core.input.IInput <|.. org.jcat.core.input.AbstractInput
 org.jcat.core.output.AbstractOutput <|-- org.jcat.core.output.StandardOutput
 junit.framework.TestCase <|-- org.jcat.AppTest
-org.jcat.core.stream.IJCatStream <|.. org.jcat.core.stream.AbstractJCatStream
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin
 org.jcat.core.output.AbstractOutput <|-- org.jcat.core.output.FileOutput
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceTabsPlugin

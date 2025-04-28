@@ -1,0 +1,9 @@
+begin 開始行
+
+
+middle 2連続空行
+
+
+
+middle 3連続空行
+end ファイル末尾

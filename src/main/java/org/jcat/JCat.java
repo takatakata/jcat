@@ -5,12 +5,11 @@ import java.io.IOException;
 
 import org.jcat.core.CatOption;
 import org.jcat.core.context.GlobalContext;
+import org.jcat.core.context.StreamContext;
 import org.jcat.core.input.FileInput;
 import org.jcat.core.input.IInput;
 import org.jcat.core.output.IOutput;
 import org.jcat.core.output.StandardOutput;
-import org.jcat.core.stream.IJCatStream;
-import org.jcat.core.stream.JCatStream;
 import org.jcat.plugin.IReplacePlugin;
 import org.jcat.plugin.IUsagePlugin;
 import org.jcat.plugin.PluginHolder;
@@ -64,14 +63,14 @@ public class JCat {
 
     private void cat() throws IOException {
         try (IOutput output = new StandardOutput("\r\n")) {
-            GlobalContext context = new GlobalContext();
+            GlobalContext gContext = new GlobalContext();
             for (String path : option.getFileList()) {
                 try (IInput input = new FileInput(path)) {
-                    IJCatStream<IInput> stream 
-                        = new JCatStream<>(context, option, input);
-                    while (stream.next()) {
-                        String line = stream.readLine();
-                        line = pluginHolder.replace(stream.getContext(), line);
+                    StreamContext sContext = new StreamContext(gContext, option);
+                    String line;
+                    while ((line = input.read()) != null) {
+                        sContext.addLine(line);
+                        line = pluginHolder.replace(sContext, line);
                         if (line == null) {
                             continue;
                         }
