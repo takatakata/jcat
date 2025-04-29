@@ -96,34 +96,4 @@ public abstract class AbstractInput implements IInput {
     public void close() throws IOException {
         is.close();
     }
-
-//    private String sanitize(String src) throws IOException {
-//        StringBuffer buf = new StringBuffer();
-//        if (src == null) {
-//            return src;
-//        }
-//        try (IntStream input = src.codePoints()) {
-//            input.forEach(ch -> {
-//                if (ch >= 32) {
-//                    buf.appendCodePoint(ch);
-//                } else if (ch == '\t') {
-//                    buf.append("\t");
-//                } else if (ch == '\n') {
-//                    buf.append("\n");
-//                } else if (ch == '\r') {
-//                    buf.append("\r");//CR
-//                } else if (ch == 0x0b) {
-//                    buf.appendCodePoint(ch);//VT
-//                } else if (ch == 0x08) {
-//                    buf.appendCodePoint(ch);//BS
-//                } else if (ch == 0x0c) {
-//                    buf.appendCodePoint(ch);//FF
-//                } else {
-//                    ; //追加しない
-//                }
-//            });
-//        }
-//        return buf.toString();
-//    }
-
 }
