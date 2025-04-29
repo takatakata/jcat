@@ -62,7 +62,7 @@ public class JCat {
     }
 
     private void cat() throws IOException {
-        try (IOutput output = new StandardOutput("\r\n")) {
+        try (IOutput output = new StandardOutput("\n")) {
             GlobalContext gContext = new GlobalContext();
             for (String path : option.getFileList()) {
                 try (IInput input = new FileInput(path)) {
@@ -76,9 +76,6 @@ public class JCat {
                         }
                         output.writeLine(line);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw e;
                 }
             }
         }

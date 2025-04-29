@@ -4,7 +4,7 @@ import org.jcat.core.context.StreamContext;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 /**
- * 制約事項：999,999行を超える場合行番号が「%6d」に収まらない
+ * FIXME: 制約事項：999,999行を超える場合行番号が「%6d」に収まらない
  */
 public class ReplaceNumberPlugin extends AbstractReplacePlugin {
 
@@ -15,7 +15,8 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
     @Override
     public String replaceLine(StreamContext context, String src) {
 		context.incrementLineNumOutput();
-		return String.format("%6d  ", context.getLineNumOutput()) + src;
+		String margin = (src != null && src.length() > 0) ? "\t" : "";
+		return String.format("%6d%s", context.getLineNumOutput(), margin) + src;
     }
     
 	@Override
