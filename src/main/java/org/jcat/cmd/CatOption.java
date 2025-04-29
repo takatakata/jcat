@@ -107,6 +107,10 @@ public class CatOption {
         return isShowHelp() || isShowVersion();
     }
 
+    public boolean isCatEnabled() {
+        return !isUsageEnabled();
+    }
+
     public List<String> getFileList() {
         return fileList;
     }

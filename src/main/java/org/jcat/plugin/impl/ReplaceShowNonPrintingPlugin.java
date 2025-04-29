@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.jcat.context.StreamContext;
+import org.jcat.context.FileContext;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
@@ -14,7 +14,7 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
     }
 
     @Override
-    public String replaceLine(StreamContext context, String src) {
+    public String replaceLine(FileContext context, String src) {
     	return convertAsBytes(src);
     }
     

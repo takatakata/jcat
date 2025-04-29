@@ -1,6 +1,6 @@
 package org.jcat.plugin;
 
-import org.jcat.context.StreamContext;
+import org.jcat.context.FileContext;
 
 public abstract class AbstractReplacePlugin extends AbstractPlugin implements IReplacePlugin {
 
@@ -9,12 +9,12 @@ public abstract class AbstractReplacePlugin extends AbstractPlugin implements IR
     }
 
     @Override
-    public final String replace(StreamContext context, String src) {
+    public final String replace(FileContext context, String src) {
         if (src == null) {
             return src;
         }
         return replaceLine(context, src);
     }
 
-    protected abstract String replaceLine(StreamContext context, String src);
+    protected abstract String replaceLine(FileContext context, String src);
 }

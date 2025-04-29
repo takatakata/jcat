@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.jcat.cmd.CatOption;
-import org.jcat.context.GlobalContext;
-import org.jcat.context.StreamContext;
+import org.jcat.context.CommandContext;
+import org.jcat.context.FileContext;
 import org.jcat.input.FileInput;
 import org.jcat.input.IInput;
 import org.jcat.output.IOutput;
@@ -54,7 +54,7 @@ public class JCat {
 
     public void exec() throws IOException {
         if (option.isUsageEnabled()) usage();
-        if (!option.isUsageEnabled()) cat();
+        if (option.isCatEnabled()) cat();
     }
 
     private void usage() throws IOException {
@@ -63,14 +63,14 @@ public class JCat {
 
     private void cat() throws IOException {
         try (IOutput output = new StandardOutput("\n")) {
-            GlobalContext gContext = new GlobalContext();
+            CommandContext commandContext = new CommandContext();
             for (String path : option.getFileList()) {
                 try (IInput input = new FileInput(path)) {
-                    StreamContext sContext = new StreamContext(gContext);
+                    FileContext fileContext = new FileContext(commandContext);
                     String line;
                     while ((line = input.read()) != null) {
-                        sContext.addLine(line);
-                        line = pluginHolder.replace(sContext, line);
+                        fileContext.addLine(line);
+                        line = pluginHolder.replace(fileContext, line);
                         if (line == null) {
                             continue;
                         }

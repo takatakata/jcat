@@ -1,15 +1,15 @@
 package org.jcat.context;
 
-public class StreamContext {
-    private GlobalContext context;
+public class FileContext {
+    private CommandContext context;
 
     private String linePrevious = null;
     private String lineCurrent = null;
 
-    public StreamContext() {
+    public FileContext() {
     }
 
-    public StreamContext(GlobalContext context) {
+    public FileContext(CommandContext context) {
         this();
         this.context = context;
     }
@@ -31,11 +31,11 @@ public class StreamContext {
         return lineCurrent;
     }
 
-    public long getLineNumOutput() {
-        return context.getLineNumOutput();
+    public long getLineNum() {
+        return context.getLineNum();
     }
 
-    public long incrementLineNumOutput() {
-        return context.incrementLineNumOutput();
+    public long incrementLineNum() {
+        return context.incrementLineNum();
     }
 }

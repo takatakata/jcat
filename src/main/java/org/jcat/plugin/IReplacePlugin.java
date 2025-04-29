@@ -1,7 +1,7 @@
 package org.jcat.plugin;
 
-import org.jcat.context.StreamContext;
+import org.jcat.context.FileContext;
 
 public interface IReplacePlugin extends IPlugin {
-    public String replace(StreamContext context, String src);
+    public String replace(FileContext context, String src);
 }

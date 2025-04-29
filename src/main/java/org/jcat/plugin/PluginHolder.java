@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jcat.cmd.CatOption;
-import org.jcat.context.StreamContext;
+import org.jcat.context.FileContext;
 
 /**
  * 下記オプション未対応。
@@ -53,7 +53,7 @@ public class PluginHolder {
         }
     }
 
-    public String replace(StreamContext context, String line) {
+    public String replace(FileContext context, String line) {
         for (IReplacePlugin plugin : replacePlugins) {
             line = plugin.replace(context, line);
         }

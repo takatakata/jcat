@@ -1,6 +1,6 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.context.StreamContext;
+import org.jcat.context.FileContext;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 /**
@@ -13,14 +13,14 @@ public class ReplaceNumberNonBlankPlugin extends AbstractReplacePlugin {
 	}
 
 	@Override
-	public String replaceLine(StreamContext context, String src) {
+	public String replaceLine(FileContext context, String src) {
 		if ("".equals(src)) {
 			//現在行が空行のときは何もしない
 			return src;
 		}
         String margin = (src != null && src.length() > 0) ? "\t" : "";
-		context.incrementLineNumOutput();
-		return String.format("%6d%s", context.getLineNumOutput(), margin) + src;
+		context.incrementLineNum();
+		return String.format("%6d%s", context.getLineNum(), margin) + src;
 	}
 
 	@Override
