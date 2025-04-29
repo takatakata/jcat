@@ -19,87 +19,100 @@ public class CatOption {
     public CatOption() {
     }
 
-    public CatOption(String[] args) {
-        // System.err.println("Parameters::");
-        for (String arg : args) {
-            // System.err.println(" - [" + arg + "]");
-            switch (arg) {
-            case "-A":
-                showAll = true;
-                showEnds = true;
-                showTabs = true;
-                showNonPrinting = true;
-                break;
-            case "--show-all":
-                showAll = true;
-                showEnds = true;
-                showTabs = true;
-                showNonPrinting = true;
-                break;
-            case "-b":
-                numberNonBlank = true;
-                break;
-            case "--number-nonblank":
-                numberNonBlank = true;
-                break;
-            case "-e":
-                showNonPrinting = true;
-                showEnds = true;
-                break;
-            case "-E":
-                showEnds = true;
-                break;
-            case "--show-ends":
-                showEnds = true;
-                break;
-            case "-n":
-                number = true;
-                break;
-            case "--number":
-                number = true;
-                break;
-            case "-s":
-                squeezeBlank = true;
-                break;
-            case "--squeeze-blank":
-                squeezeBlank = true;
-                break;
-            case "-T":
-                showTabs = true;
-                break;
-            case "--show-tabs":
-                showTabs = true;
-                break;
-            case "-v":
-                showNonPrinting = true;
-                break;
-            case "--show-nonprinting":
-                showNonPrinting = true;
-                break;
-            case "-t":
-                showNonPrinting = true;
-                showTabs = true;
-                break;
-            case "-u":
-                ignored = true;
-                break;
-            case "--help":
-                showHelp = true;
-                break;
-            case "--version":
-                showVersion = true;
-                break;
-            default:
-                addFileList(arg);
-                break;
+    public CatOption(String[] options) {
+        for (String option : options) {
+            if (option.startsWith("--")) {
+                //オプション形式「--show-all」
+                addOption(option);
+            } else if (option.matches("^-[A-Za-z]+$")) {
+                //オプション形式「-A」「-vT」
+                option.substring(1).chars().forEach(ch -> {
+                    addOption(new StringBuilder("-").appendCodePoint(ch).toString());
+                });
+            } else if (option.matches("^[^-].*")) {
+                //オプション形式ファイルパス
+                addFileList(option);
             }
         }
         if( isShowHelp() && isShowVersion() ) {
-            if (String.join(",", args).matches(".*--help.*--version.*")) {
+            if (String.join(",", options).matches(".*--help.*--version.*")) {
                 showVersion = false;
             } else {
                 showHelp = false;
             }
+        }
+    }
+    
+    private void addOption(String option) {
+        switch (option) {
+        case "-A":
+            showAll = true;
+            showEnds = true;
+            showTabs = true;
+            showNonPrinting = true;
+            break;
+        case "--show-all":
+            showAll = true;
+            showEnds = true;
+            showTabs = true;
+            showNonPrinting = true;
+            break;
+        case "-b":
+            numberNonBlank = true;
+            break;
+        case "--number-nonblank":
+            numberNonBlank = true;
+            break;
+        case "-e":
+            showNonPrinting = true;
+            showEnds = true;
+            break;
+        case "-E":
+            showEnds = true;
+            break;
+        case "--show-ends":
+            showEnds = true;
+            break;
+        case "-n":
+            number = true;
+            break;
+        case "--number":
+            number = true;
+            break;
+        case "-s":
+            squeezeBlank = true;
+            break;
+        case "--squeeze-blank":
+            squeezeBlank = true;
+            break;
+        case "-T":
+            showTabs = true;
+            break;
+        case "--show-tabs":
+            showTabs = true;
+            break;
+        case "-v":
+            showNonPrinting = true;
+            break;
+        case "--show-nonprinting":
+            showNonPrinting = true;
+            break;
+        case "-t":
+            showNonPrinting = true;
+            showTabs = true;
+            break;
+        case "-u":
+            ignored = true;
+            break;
+        case "--help":
+            showHelp = true;
+            break;
+        case "--version":
+            showVersion = true;
+            break;
+        default:
+            addFileList(option);
+            break;
         }
     }
 
