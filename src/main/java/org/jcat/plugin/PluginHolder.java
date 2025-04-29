@@ -1,11 +1,13 @@
 package org.jcat.plugin;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jcat.cmd.CatOption;
 import org.jcat.context.FileContext;
+import org.jcat.output.IOutput;
 
 /**
  * 下記オプション未対応。
@@ -47,9 +49,9 @@ public class PluginHolder {
         });
     }
 
-    public void usage() {
+    public void usage(IOutput output) throws IOException {
         for (IUsagePlugin plugin : usagePlugins) {
-            plugin.usage();
+            plugin.usage(output);
         }
     }
 

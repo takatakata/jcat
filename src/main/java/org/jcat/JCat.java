@@ -1,13 +1,14 @@
 package org.jcat;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.jcat.cmd.CatOption;
 import org.jcat.context.CommandContext;
 import org.jcat.context.FileContext;
 import org.jcat.input.FileInput;
 import org.jcat.input.IInput;
+import org.jcat.output.FileOutput;
 import org.jcat.output.IOutput;
 import org.jcat.output.StandardOutput;
 import org.jcat.plugin.IReplacePlugin;
@@ -31,10 +32,11 @@ public class JCat {
 
     private CatOption option;
     private PluginHolder pluginHolder;
+    private OutputStream os;
 
-    public JCat(String[] args) throws FileNotFoundException {
+    public JCat(String[] options) {
 
-        this.option = new CatOption(args);
+        this.option = new CatOption(options);
         this.pluginHolder = new PluginHolder(option);
 
         this.pluginHolder.addUsagePlugin(new IUsagePlugin[] {
@@ -52,30 +54,46 @@ public class JCat {
         });
     }
 
+    public JCat(String[] options, OutputStream os) {
+        this(options);
+        this.os = os;
+    }
+    
+
     public void exec() throws IOException {
-        if (option.isUsageEnabled()) usage();
-        if (option.isCatEnabled()) cat();
+        IOutput output = null;
+        try {
+            output = (os == null) ? new StandardOutput("\n") : new FileOutput(os, "\n");
+            if (option.isUsageEnabled()) {
+                usage(output);
+            }
+            if (option.isCatEnabled()) {
+                cat(output);
+            }
+        } finally {
+            if (os == null) {
+                output.close();
+            }
+        }
     }
 
-    private void usage() throws IOException {
-        pluginHolder.usage();
+    private void usage(IOutput output) throws IOException {
+        pluginHolder.usage(output);
     }
 
-    private void cat() throws IOException {
-        try (IOutput output = new StandardOutput("\n")) {
-            CommandContext commandContext = new CommandContext();
-            for (String path : option.getFileList()) {
-                try (IInput input = new FileInput(path)) {
-                    FileContext fileContext = new FileContext(commandContext);
-                    String line;
-                    while ((line = input.read()) != null) {
-                        fileContext.addLine(line);
-                        line = pluginHolder.replace(fileContext, line);
-                        if (line == null) {
-                            continue;
-                        }
-                        output.writeLine(line);
+    private void cat(IOutput output) throws IOException {
+        CommandContext commandContext = new CommandContext();
+        for (String path : option.getFileList()) {
+            try (IInput input = new FileInput(path)) {
+                FileContext fileContext = new FileContext(commandContext);
+                String line;
+                while ((line = input.read()) != null) {
+                    fileContext.addLine(line);
+                    line = pluginHolder.replace(fileContext, line);
+                    if (line == null) {
+                        continue;
                     }
+                    output.writeLine(line);
                 }
             }
         }
@@ -86,7 +104,7 @@ public class JCat {
             JCat app = new JCat(args);
             app.exec();
             System.exit(EXIT_SUCCESS);
-        } catch (Throwable e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.exit(EXIT_FAILURE);
         }

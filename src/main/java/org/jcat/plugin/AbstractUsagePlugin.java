@@ -1,5 +1,9 @@
 package org.jcat.plugin;
 
+import java.io.IOException;
+
+import org.jcat.output.IOutput;
+
 public abstract class AbstractUsagePlugin extends AbstractPlugin implements IUsagePlugin {
 
     public AbstractUsagePlugin() {
@@ -7,11 +11,11 @@ public abstract class AbstractUsagePlugin extends AbstractPlugin implements IUsa
     }
 
     @Override
-    public void usage() {
+    public void usage(IOutput output) throws IOException {
         if (isEnabled()) {
-            show();
+            show(output);
         }
     }
 
-    protected abstract void show();
+    protected abstract void show(IOutput output) throws IOException;
 }
