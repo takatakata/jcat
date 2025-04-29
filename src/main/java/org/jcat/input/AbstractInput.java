@@ -25,12 +25,12 @@ public abstract class AbstractInput implements IInput {
     public String read() throws IOException {
         String line = null;
         while (true) {
-            //バッファーから1行取り出す
+            //バッファーから1行取り出す（バッファーに複数行含まれているときはここが繰り返される）
             line = pickoutLine();
             if (line != null) {
                 break;
             }
-            //ファイルを読みとりバッファーに加える（行が見つかるまで何度でも繰り返す）
+            //バッファーを使い切ったらファイルを読みとりバッファーに加える
             int len = appendBuffer();
             if (len <= 0) {
                 //ファイル読み込みが0バイト以下になったら読み込みを終える
