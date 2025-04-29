@@ -1,4 +1,4 @@
-package org.jcat.core;
+package org.jcat.cmd;
 
 import java.util.ArrayList;
 import java.util.List;

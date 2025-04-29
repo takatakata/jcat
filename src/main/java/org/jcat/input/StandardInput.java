@@ -1,12 +1,11 @@
-package org.jcat.core.input;
+package org.jcat.input;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 
 public class StandardInput extends AbstractInput {
 
     public StandardInput() throws FileNotFoundException {
-        super(new BufferedReader(new InputStreamReader(System.in)));
+        super(new InputStreamReader(System.in));
     }
 }

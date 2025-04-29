@@ -1,4 +1,4 @@
-package org.jcat.core.context;
+package org.jcat.context;
 
 public class GlobalContext {
 

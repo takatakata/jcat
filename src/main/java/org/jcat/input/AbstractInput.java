@@ -1,7 +1,8 @@
-package org.jcat.core.input;
+package org.jcat.input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public abstract class AbstractInput implements IInput {
 
@@ -13,8 +14,8 @@ public abstract class AbstractInput implements IInput {
     public AbstractInput() {
     }
 
-    public AbstractInput(BufferedReader is) {
-        this.is = is;
+    public AbstractInput(InputStreamReader is) {
+        this.is = new BufferedReader(is);
     }
 
     /**

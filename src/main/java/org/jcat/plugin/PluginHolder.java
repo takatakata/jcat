@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.jcat.core.CatOption;
-import org.jcat.core.context.StreamContext;
+import org.jcat.cmd.CatOption;
+import org.jcat.context.StreamContext;
 
 /**
  * 下記オプション未対応。

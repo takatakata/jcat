@@ -1,6 +1,6 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.core.context.StreamContext;
+import org.jcat.context.StreamContext;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceEndsPlugin extends AbstractReplacePlugin {

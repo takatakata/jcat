@@ -1,6 +1,6 @@
-package org.jcat.core.context;
+package org.jcat.context;
 
-import org.jcat.core.CatOption;
+import org.jcat.cmd.CatOption;
 
 public class StreamContext {
     private CatOption option;

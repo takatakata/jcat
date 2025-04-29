@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.jcat.core.context.StreamContext;
+import org.jcat.context.StreamContext;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {

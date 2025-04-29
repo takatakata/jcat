@@ -1,4 +1,4 @@
-package org.jcat.core.output;
+package org.jcat.output;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

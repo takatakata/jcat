@@ -1,4 +1,4 @@
-package org.jcat.core.input;
+package org.jcat.input;
 
 import java.io.Closeable;
 import java.io.IOException;
