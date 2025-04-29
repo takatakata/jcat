@@ -16,11 +16,6 @@ abstract class org.jcat.output.AbstractOutput {
 
 class org.jcat.input.FileInput {
 }
-class org.jcat.AppTest {
-+ {static} Test suite()
-+ void testApp()
-}
-
 class org.jcat.context.FileContext {
 + void addLine(String)
 + String getLinePrevious()
@@ -45,7 +40,7 @@ interface org.jcat.plugin.IPlugin {
 }
 
 interface org.jcat.plugin.IUsagePlugin {
-+ void usage()
++ void usage(IOutput)
 }
 
 interface org.jcat.input.IInput {
@@ -56,7 +51,7 @@ interface org.jcat.input.IInput {
 }
 
 class org.jcat.plugin.impl.UsageHelpPlugin {
-+ void show()
++ void show(IOutput)
 + boolean isEnabled()
 }
 
@@ -76,7 +71,7 @@ class org.jcat.plugin.PluginHolder {
 # Set<IUsagePlugin> usagePlugins
 + void addReplacePlugin(IReplacePlugin[])
 + void addUsagePlugin(IUsagePlugin[])
-+ void usage()
++ void usage(IOutput)
 + String replace(FileContext,String)
 }
 
@@ -106,8 +101,8 @@ abstract class org.jcat.input.AbstractInput {
 
 
 abstract class org.jcat.plugin.AbstractUsagePlugin {
-+ void usage()
-# {abstract}void show()
++ void usage(IOutput)
+# {abstract}void show(IOutput)
 }
 
 class org.jcat.JCat {
@@ -124,6 +119,32 @@ class org.jcat.output.StandardOutput {
 class org.jcat.plugin.impl.ReplaceEndsPlugin {
 + String replaceLine(FileContext,String)
 + boolean isEnabled()
+}
+
+class org.jcat.JCatTest {
++ {static} Test suite()
++ void testHelp()
++ void testVersion()
++ void testOne()
++ void testTwo()
++ void testNumberShortOption()
++ void testNumberLongOption()
++ void testNumberNonblankShortOption()
++ void testNumberNonblankLongOption()
++ void testNumberSqueezeShortOption()
++ void testNumberSqueezeLongOption()
++ void testShowTabsShortOption()
++ void testShowTabsLongOption()
++ void testShowEndsShortOption()
++ void testShowEndsLongOption()
++ void testShowNonprintingShortOption()
++ void testShowNonprintingLongOption()
++ void testComplexAOption()
++ void testComplexEOption()
++ void testComplexTOption()
++ void testComplexVETOption()
++ void testComplexVEOption()
++ void testComplexVTOption()
 }
 
 class org.jcat.cmd.CatOption {
@@ -161,7 +182,7 @@ abstract class org.jcat.plugin.AbstractPlugin {
 
 
 class org.jcat.plugin.impl.UsageVersionPlugin {
-+ void show()
++ void show(IOutput)
 + boolean isEnabled()
 }
 
@@ -176,7 +197,6 @@ class org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin {
 
 org.jcat.output.IOutput <|.. org.jcat.output.AbstractOutput
 org.jcat.input.AbstractInput <|-- org.jcat.input.FileInput
-junit.framework.TestCase <|-- org.jcat.AppTest
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceTabsPlugin
 org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IUsagePlugin
@@ -193,6 +213,7 @@ org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.AbstractUsagePlugin
 org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IReplacePlugin
 org.jcat.output.AbstractOutput <|-- org.jcat.output.StandardOutput
 org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceEndsPlugin
+junit.framework.TestCase <|-- org.jcat.JCatTest
 java.io.Closeable <|-- org.jcat.output.IOutput
 org.jcat.plugin.IPlugin <|.. org.jcat.plugin.AbstractPlugin
 org.jcat.plugin.AbstractUsagePlugin <|-- org.jcat.plugin.impl.UsageVersionPlugin
