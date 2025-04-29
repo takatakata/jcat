@@ -8,10 +8,6 @@ public class GlobalContext {
         return lineNumOutput;
     }
 
-    public void setLineNumOutput(long lineNumOutput) {
-        this.lineNumOutput = lineNumOutput;
-    }
-
     public long incrementLineNumOutput() {
         return ++lineNumOutput;
     }

@@ -66,7 +66,7 @@ public class JCat {
             GlobalContext gContext = new GlobalContext();
             for (String path : option.getFileList()) {
                 try (IInput input = new FileInput(path)) {
-                    StreamContext sContext = new StreamContext(gContext, option);
+                    StreamContext sContext = new StreamContext(gContext);
                     String line;
                     while ((line = input.read()) != null) {
                         sContext.addLine(line);
