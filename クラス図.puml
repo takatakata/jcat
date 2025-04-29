@@ -14,12 +14,6 @@ abstract class org.jcat.output.AbstractOutput {
 }
 
 
-class org.jcat.context.GlobalContext {
-+ long getLineNumOutput()
-+ void setLineNumOutput(long)
-+ long incrementLineNumOutput()
-}
-
 class org.jcat.input.FileInput {
 }
 class org.jcat.AppTest {
@@ -27,13 +21,21 @@ class org.jcat.AppTest {
 + void testApp()
 }
 
+class org.jcat.context.FileContext {
++ void addLine(String)
++ String getLinePrevious()
++ String getLineCurrent()
++ long getLineNum()
++ long incrementLineNum()
+}
+
 class org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin {
-+ String replaceLine(StreamContext,String)
++ String replaceLine(FileContext,String)
 + boolean isEnabled()
 }
 
 class org.jcat.plugin.impl.ReplaceTabsPlugin {
-+ String replaceLine(StreamContext,String)
++ String replaceLine(FileContext,String)
 + boolean isEnabled()
 }
 
@@ -58,26 +60,13 @@ class org.jcat.plugin.impl.UsageHelpPlugin {
 + boolean isEnabled()
 }
 
-class org.jcat.context.StreamContext {
-+ void addLine(String)
-+ CatOption getOption()
-+ void setOption(CatOption)
-+ String getLinePrevious()
-+ void setLinePrevious(String)
-+ String getLineCurrent()
-+ void setLineCurrent(String)
-+ long getLineNumOutput()
-+ void setLineNumOutput(long)
-+ long incrementLineNumOutput()
-}
-
 class org.jcat.plugin.impl.ReplaceNumberPlugin {
-+ String replaceLine(StreamContext,String)
++ String replaceLine(FileContext,String)
 + boolean isEnabled()
 }
 
 class org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin {
-+ String replaceLine(StreamContext,String)
++ String replaceLine(FileContext,String)
 + boolean isEnabled()
 }
 
@@ -88,15 +77,20 @@ class org.jcat.plugin.PluginHolder {
 + void addReplacePlugin(IReplacePlugin[])
 + void addUsagePlugin(IUsagePlugin[])
 + void usage()
-+ String replace(StreamContext,String)
++ String replace(FileContext,String)
 }
 
 
 class org.jcat.output.FileOutput {
 }
+class org.jcat.context.CommandContext {
++ long getLineNum()
++ long incrementLineNum()
+}
+
 abstract class org.jcat.plugin.AbstractReplacePlugin {
-+ String replace(StreamContext,String)
-# {abstract}String replaceLine(StreamContext,String)
++ String replace(FileContext,String)
+# {abstract}String replaceLine(FileContext,String)
 }
 
 abstract class org.jcat.input.AbstractInput {
@@ -122,18 +116,19 @@ class org.jcat.JCat {
 }
 
 interface org.jcat.plugin.IReplacePlugin {
-+ String replace(StreamContext,String)
++ String replace(FileContext,String)
 }
 
 class org.jcat.output.StandardOutput {
 }
 class org.jcat.plugin.impl.ReplaceEndsPlugin {
-+ String replaceLine(StreamContext,String)
++ String replaceLine(FileContext,String)
 + boolean isEnabled()
 }
 
 class org.jcat.cmd.CatOption {
 + boolean isUsageEnabled()
++ boolean isCatEnabled()
 + List<String> getFileList()
 + void addFileList(String)
 + boolean isShowAll()
@@ -173,7 +168,7 @@ class org.jcat.plugin.impl.UsageVersionPlugin {
 class org.jcat.input.StandardInput {
 }
 class org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin {
-+ String replaceLine(StreamContext,String)
++ String replaceLine(FileContext,String)
 + boolean isEnabled()
 }
 
