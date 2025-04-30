@@ -10,12 +10,7 @@ import org.jcat.context.Context;
 import org.jcat.output.IOutput;
 
 /**
- * 下記オプション未対応。
- *  「-A」「--show-all」
- *  「-e」（VEオプションに同じ）
- *  「-v」「--show-nonprinting」
- *  「-t」（VTオプションに同じ）
- *  「」
+ * プラグイン管理用クラス。
  */
 public class PluginHolder {
 
@@ -56,9 +51,16 @@ public class PluginHolder {
     }
 
     public String replace(Context context, String line) {
+    	//改行を含まない部分を対象にReplacePluginによる置き換えを行う
+    	String contents = line.substring(0, context.isLineCurrentLastCharLF() ? line.length() - 1 : line.length());
         for (IReplacePlugin plugin : replacePlugins) {
-            line = plugin.replace(context, line);
+        	contents = plugin.replace(context, contents);
         }
-        return line;
+		//nullの場合は出力しない（連続空白行など）
+    	if (contents == null) {
+    		return null;
+    	}
+    	//行末の改行文字を復元して結果を返す
+        return contents + (context.isLineCurrentLastCharLF() ? "\n" : "");
     }
 }

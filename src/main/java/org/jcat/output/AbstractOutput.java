@@ -13,8 +13,8 @@ public abstract class AbstractOutput implements IOutput {
     public AbstractOutput() {
     }
 
-    public AbstractOutput(OutputStream bos) throws FileNotFoundException {
-        os = bos;
+    public AbstractOutput(OutputStream os) throws FileNotFoundException {
+        this.os = os;
     }
 
     @Override

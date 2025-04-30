@@ -60,16 +60,17 @@ public abstract class AbstractInput implements IInput {
     }
 
     /*
-     * LFを探索しLFが見つかったら行頭からLFまでの文字列を取り出しバッファーを先に進める。
-     * LFが見つからない場合nullを返す。
+     * LFを探索しLFが見つかったら行頭からLFの1つ前までの文字列を返却する。
+     * LFが見つからなかったらnullを返す。
+     * バッファーをLFの1つ先に進める。
      */
     private String pickoutLine() {
         int newlineIndex = buffer.indexOf("\n");
         if (newlineIndex > -1) {
             int begin = 0;
-            int end = newlineIndex;
+            int end = newlineIndex + 1;//LF文字を含めた終末位置
             String line = buffer.substring(begin, end);
-            int startNew = end + 1;
+            int startNew = end;
             int length = buffer.length();
             if (length > startNew) {
                 buffer = new StringBuilder(buffer.substring(startNew, length));

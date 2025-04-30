@@ -11,7 +11,7 @@ public class ReplaceSqueezeBlankPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(Context context, String src) {
-        if ("".equals(context.getLinePrevious()) && "".equals(context.getLineCurrent())) {
+        if ("\n".equals(context.getLinePrevious()) && "\n".equals(context.getLineCurrent())) {
             return null;
         }
         return src;

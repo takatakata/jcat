@@ -2,7 +2,6 @@ package org.jcat;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.jcat.cmd.CatOption;
 import org.jcat.context.Context;
@@ -87,17 +86,18 @@ public class JCat {
     }
 
     private void cat(IOutput output) throws IOException {
-        AtomicLong lineNum = new AtomicLong(0L);
+    	Context context = new Context();
         for (String path : options.getFileList()) {
-            Context context = new Context(lineNum);
             String line;
             try (IInput input = new FileInput(path)) {
                 while ((line = input.read()) != null) {
-                    context.rotate(line);
+                    context.rotateLine(line);
                     line = plugins.replace(context, line);
-                    if (line != null) {
-                        output.writeLine(line);
+                    if (line == null) {
+                    	//nullの場合は出力しない（連続空白行など）
+                    	continue;
                     }  
+                    output.write(line);
                 }
             }
         }

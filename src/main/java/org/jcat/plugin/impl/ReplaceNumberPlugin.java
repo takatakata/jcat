@@ -14,9 +14,15 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(Context context, String src) {
+    	if (context.getLineNum() == 0) {
+			//最初の1行目の場合は行番号を出力する
+			;
+		} else if (!context.isLinePreviouLastCharLF()) {
+			//前回改行が含まれなかったときはまだ行の途中であるため行番号を付加しない
+			return src;
+		}
 		context.incrementLineNum();
-		String margin = (src.length() > 0) ? "\t" : "\t";
-		return String.format("%6d%s", context.getLineNum(), margin) + src;
+		return String.format("%6d\t", context.getLineNum()) + src;
     }
     
 	@Override

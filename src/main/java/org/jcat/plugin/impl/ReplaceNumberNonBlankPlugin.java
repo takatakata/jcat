@@ -15,12 +15,17 @@ public class ReplaceNumberNonBlankPlugin extends AbstractReplacePlugin {
 	@Override
 	public String replaceLine(Context context, String src) {
 		if ("".equals(src)) {
-			//現在行が空行のときは何もしない
+			//現在行が空行のときは行番号を付加しない
+			return src;
+		} else if (context.getLineNum() == 0) {
+			//最初の1行目の場合は行番号を出力する
+			;
+		} else if (!context.isLinePreviouLastCharLF()) {
+			//前回改行が含まれなかったときはまだ行の途中であるため行番号を付加しない
 			return src;
 		}
-        String margin = (src != null && src.length() > 0) ? "\t" : "";
 		context.incrementLineNum();
-		return String.format("%6d%s", context.getLineNum(), margin) + src;
+		return String.format("%6d\t", context.getLineNum()) + src;
 	}
 
 	@Override

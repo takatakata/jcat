@@ -11,6 +11,10 @@ public class ReplaceEndsPlugin extends AbstractReplacePlugin {
 
     @Override
     public String replaceLine(Context context, String src) {
+    	if (!context.isLineCurrentLastCharLF()) {
+    		//改行が含まれないときはまだ行の途中であるため行末記号を付加しない
+    		return src;
+    	}
         return src + "$";
     }
 
