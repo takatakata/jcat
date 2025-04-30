@@ -18,11 +18,13 @@ abstract class org.jcat.output.AbstractOutput {
 class org.jcat.input.FileInput {
 }
 class org.jcat.context.Context {
-+ void rotate(String)
++ void rotateLine(String)
 + String getLinePrevious()
 + String getLineCurrent()
 + long getLineNum()
 + long incrementLineNum()
++ boolean isLinePreviouLastCharLF()
++ boolean isLineCurrentLastCharLF()
 }
 
 class org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin {
@@ -121,8 +123,7 @@ class org.jcat.JCatTest {
 + {static} Test suite()
 + void testHelp()
 + void testVersion()
-+ void testOne()
-+ void testTwo()
++ void testNothingOptions()
 + void testNumberShortOption()
 + void testNumberLongOption()
 + void testNumberNonblankShortOption()
