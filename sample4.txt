@@ -1,0 +1,1 @@
+begin 開始行(CR)middle 2連続空行middle 3連続空行end ファイル末尾

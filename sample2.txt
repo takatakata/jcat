@@ -1,4 +1,4 @@
-begin 開始行
+begin 開始行(LF)
 
 
 middle 2連続空行

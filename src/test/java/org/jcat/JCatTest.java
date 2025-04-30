@@ -56,23 +56,12 @@ public class JCatTest extends TestCase {
     }
 
     /**
-     * 1ファイル比較。
+     * オプションなし。
      * 
      * @throws IOException 
      */
-    public void testOne() throws IOException {
-        String options[] = new String[] { "./sample1.txt" };
-        String result[] = retreiveCatAndJCat(options);
-        assertEquals(result[0], result[1]);
-    }
-
-    /**
-     * 2ファイル比較。
-     * 
-     * @throws IOException 
-     */
-    public void testTwo() throws IOException {
-        String options[] = new String[] { "./sample1.txt", "./sample2.txt" };
+    public void testNothingOptions() throws IOException {
+        String options[] = new String[] {};
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -83,7 +72,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testNumberShortOption() throws IOException {
-        String options[] = new String[] { "-n", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-n" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -94,7 +83,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testNumberLongOption() throws IOException {
-        String options[] = new String[] { "--number", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "--number" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -105,7 +94,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testNumberNonblankShortOption() throws IOException {
-        String options[] = new String[] { "-b", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-b" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -116,7 +105,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testNumberNonblankLongOption() throws IOException {
-        String options[] = new String[] { "--number-nonblank", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "--number-nonblank" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -127,7 +116,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testNumberSqueezeShortOption() throws IOException {
-        String options[] = new String[] { "-s", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-s" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -138,7 +127,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testNumberSqueezeLongOption() throws IOException {
-        String options[] = new String[] { "--squeeze-blank", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "--squeeze-blank" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -149,7 +138,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testShowTabsShortOption() throws IOException {
-        String options[] = new String[] { "-t", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-t" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -160,7 +149,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testShowTabsLongOption() throws IOException {
-        String options[] = new String[] { "--show-tabs", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "--show-tabs" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -171,7 +160,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testShowEndsShortOption() throws IOException {
-        String options[] = new String[] { "-E", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-E" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -182,7 +171,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testShowEndsLongOption() throws IOException {
-        String options[] = new String[] { "--show-ends", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "--show-ends" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -193,7 +182,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testShowNonprintingShortOption() throws IOException {
-        String options[] = new String[] { "-v", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-v" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -204,7 +193,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testShowNonprintingLongOption() throws IOException {
-        String options[] = new String[] { "--show-nonprinting", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "--show-nonprinting" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -215,7 +204,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testComplexAOption() throws IOException {
-        String options[] = new String[] { "-A", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-A" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -226,7 +215,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testComplexEOption() throws IOException {
-        String options[] = new String[] { "-e", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-e" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -237,7 +226,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testComplexTOption() throws IOException {
-        String options[] = new String[] { "-T", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-T" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -248,7 +237,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testComplexVETOption() throws IOException {
-        String options[] = new String[] { "-vET", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-vET" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -259,7 +248,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testComplexVEOption() throws IOException {
-        String options[] = new String[] { "-vE", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-vE" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -270,7 +259,7 @@ public class JCatTest extends TestCase {
      * @throws IOException 
      */
     public void testComplexVTOption() throws IOException {
-        String options[] = new String[] { "-vT", "./sample1.txt", "./sample2.txt" };
+        String options[] = new String[] { "-vT" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
     }
@@ -285,10 +274,13 @@ public class JCatTest extends TestCase {
     private String[] retreiveCatAndJCat(String options[]) throws IOException {
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         String result[] = new String[2];
-        JCat app = new JCat(options, bao);
+        List<String> optionList = new ArrayList<>();
+        optionList.addAll(Arrays.asList(options));
+        optionList.addAll(Arrays.asList(new String[] { "./sample1.txt", "./sample2.txt", "./sample3.txt", "./sample4.txt" }));
+        JCat app = new JCat(optionList.toArray(new String[optionList.size()]), bao);
         app.exec();
         bao.flush();
-        String catOutput = execAndGetCatCommand(options);
+        String catOutput = execAndGetCatCommand(optionList.toArray(new String[optionList.size()]));
         String jcatOutput = bao.toString();
         result[0] = catOutput;
         result[1] = jcatOutput;
@@ -315,7 +307,8 @@ public class JCatTest extends TestCase {
 
         // 3. 結果を受け取る
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
-        try (BufferedReader r = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.defaultCharset()))) {
+        try (BufferedReader r = new BufferedReader(
+                new InputStreamReader(process.getInputStream(), Charset.defaultCharset()))) {
             char[] charbuf = new char[1024];
             int len;
             while ((len = r.read(charbuf)) > 0) {

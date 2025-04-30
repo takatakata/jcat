@@ -15,7 +15,7 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
     @Override
     public String replaceLine(Context context, String src) {
 		context.incrementLineNum();
-		String margin = (src.length() > 0) ? "\t" : "";
+		String margin = (src.length() > 0) ? "\t" : "\t";
 		return String.format("%6d%s", context.getLineNum(), margin) + src;
     }
     

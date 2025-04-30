@@ -38,7 +38,7 @@ public abstract class AbstractInput implements IInput {
                 break;
             }
         }
-        //ファイル末端に達したら最終行を出力
+        //ファイル末端がLFでないバッファーの余りを出力
         if (line == null && streamFinished && buffer.length() > 0) {
             line = buffer.toString();
             buffer = new StringBuilder("");
