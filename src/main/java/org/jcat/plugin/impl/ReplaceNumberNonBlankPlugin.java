@@ -1,6 +1,6 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 /**
@@ -13,7 +13,7 @@ public class ReplaceNumberNonBlankPlugin extends AbstractReplacePlugin {
 	}
 
 	@Override
-	public String replaceLine(FileContext context, String src) {
+	public String replaceLine(Context context, String src) {
 		if ("".equals(src)) {
 			//現在行が空行のときは何もしない
 			return src;

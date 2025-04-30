@@ -34,8 +34,13 @@ public abstract class AbstractOutput implements IOutput {
     };
     
     @Override
-    public void close() throws IOException {
+    public void flush() throws IOException {
         os.flush();
+    }
+    
+    @Override
+    public void close() throws IOException {
+        flush();
         os.close();
     }
 

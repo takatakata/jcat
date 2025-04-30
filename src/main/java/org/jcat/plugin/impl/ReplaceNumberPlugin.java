@@ -1,6 +1,6 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 /**
@@ -13,9 +13,9 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
     }
 
     @Override
-    public String replaceLine(FileContext context, String src) {
+    public String replaceLine(Context context, String src) {
 		context.incrementLineNum();
-		String margin = (src != null && src.length() > 0) ? "\t" : "";
+		String margin = (src.length() > 0) ? "\t" : "";
 		return String.format("%6d%s", context.getLineNum(), margin) + src;
     }
     

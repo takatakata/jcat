@@ -1,6 +1,6 @@
 package org.jcat.plugin.impl;
 
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceEndsPlugin extends AbstractReplacePlugin {
@@ -10,7 +10,7 @@ public class ReplaceEndsPlugin extends AbstractReplacePlugin {
     }
 
     @Override
-    public String replaceLine(FileContext context, String src) {
+    public String replaceLine(Context context, String src) {
         return src + "$";
     }
 

@@ -10,8 +10,6 @@ public interface IOutput extends Closeable {
 
     public void writeLine(String line) throws IOException;
 
-    public void close() throws IOException;
-
     public String setEncode(String encode);
 
     public String getEncode();
@@ -19,4 +17,8 @@ public interface IOutput extends Closeable {
     public void setLineFeed(String lineFeed);
 
     public String getLineFeed();
+
+    public void flush() throws IOException;
+
+    public void close() throws IOException;
 }

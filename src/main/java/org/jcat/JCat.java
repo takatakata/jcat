@@ -2,10 +2,10 @@ package org.jcat;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.jcat.cmd.CatOption;
-import org.jcat.context.CommandContext;
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.input.FileInput;
 import org.jcat.input.IInput;
 import org.jcat.output.FileOutput;
@@ -30,21 +30,21 @@ public class JCat {
     private static final int EXIT_SUCCESS = 0;
     private static final int EXIT_FAILURE = 1;
 
-    private CatOption option;
-    private PluginHolder pluginHolder;
-    private OutputStream os;
+    private CatOption options;
+    private PluginHolder plugins;
+    private OutputStream externalOutput;
 
-    public JCat(String[] options) {
+    public JCat(String[] commands) {
 
-        this.option = new CatOption(options);
-        this.pluginHolder = new PluginHolder(option);
+        this.options = new CatOption(commands);
+        this.plugins = new PluginHolder(options);
 
-        this.pluginHolder.addUsagePlugin(new IUsagePlugin[] {
+        this.plugins.addUsagePlugin(new IUsagePlugin[] {
                 new UsageHelpPlugin(),
                 new UsageVersionPlugin()
         });
 
-        this.pluginHolder.addReplacePlugin(new IReplacePlugin[] {
+        this.plugins.addReplacePlugin(new IReplacePlugin[] {
                 new ReplaceEndsPlugin(),
                 new ReplaceNumberNonBlankPlugin(),
                 new ReplaceNumberPlugin(),
@@ -54,46 +54,50 @@ public class JCat {
         });
     }
 
-    public JCat(String[] options, OutputStream os) {
+    public JCat(String[] options, OutputStream externalOutput) {
         this(options);
-        this.os = os;
+        this.externalOutput = externalOutput;
     }
     
 
     public void exec() throws IOException {
         IOutput output = null;
         try {
-            output = (os == null) ? new StandardOutput("\n") : new FileOutput(os, "\n");
-            if (option.isUsageEnabled()) {
+            if (externalOutput == null) {
+                output = new StandardOutput("\n");
+            } else {
+                output = new FileOutput(externalOutput, "\n");
+            }
+            if (options.isUsageEnabled()) {
                 usage(output);
             }
-            if (option.isCatEnabled()) {
+            if (options.isCatEnabled()) {
                 cat(output);
             }
         } finally {
-            if (os == null) {
+            output.flush();
+            if (externalOutput == null) {
                 output.close();
             }
         }
     }
 
     private void usage(IOutput output) throws IOException {
-        pluginHolder.usage(output);
+        plugins.usage(output);
     }
 
     private void cat(IOutput output) throws IOException {
-        CommandContext commandContext = new CommandContext();
-        for (String path : option.getFileList()) {
+        AtomicLong lineNum = new AtomicLong(0L);
+        for (String path : options.getFileList()) {
+            Context context = new Context(lineNum);
+            String line;
             try (IInput input = new FileInput(path)) {
-                FileContext fileContext = new FileContext(commandContext);
-                String line;
                 while ((line = input.read()) != null) {
-                    fileContext.addLine(line);
-                    line = pluginHolder.replace(fileContext, line);
-                    if (line == null) {
-                        continue;
-                    }
-                    output.writeLine(line);
+                    context.rotate(line);
+                    line = plugins.replace(context, line);
+                    if (line != null) {
+                        output.writeLine(line);
+                    }  
                 }
             }
         }

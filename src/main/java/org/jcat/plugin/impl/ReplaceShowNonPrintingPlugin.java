@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
@@ -14,8 +14,8 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
     }
 
     @Override
-    public String replaceLine(FileContext context, String src) {
-    	return convertAsBytes(src);
+    public String replaceLine(Context context, String src) {
+    	return convertBytes(src);
     }
     
 	@Override
@@ -23,7 +23,7 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
 		return option.isShowNonPrinting();
 	}
 
-    private String convertAsBytes(String src) {
+    private String convertBytes(String src) {
         StringBuffer buf = new StringBuffer();
         byte[] bytes;
         try {
@@ -120,40 +120,4 @@ public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
      *         }
      *     }
      */
-
-//	private String convertAsCodepoint(String src) {
-//	    StringBuffer buf = new StringBuffer();
-//        try (IntStream input = src.codePoints()) {
-//            input.forEach(ch -> {
-//                if (ch >= 32) {
-//                    if (ch < 127) {
-//                        buf.appendCodePoint(ch);
-//                    } else if (ch == 127) {
-//                        buf.append("^?");
-//                    } else {
-//                        if (ch >= 128 + 32) {
-//                            if (ch < 128 + 127) {
-//                                buf.append("M-");
-//                                buf.appendCodePoint(ch - 128);
-//                            } else {
-//                                // treat ch as a Unicode character, not just an ASCII character 
-//                                // original code: `buf.append("^?")`
-//                                buf.appendCodePoint(ch);
-//                            }
-//                        } else {
-//                            buf.append("M-");
-//                            buf.append("^").appendCodePoint(ch - 128 + 64);
-//                        }
-//                    }
-//                } else if (ch == '\t' && !option.isShowTabs()) {
-//                    buf.append("\t");
-//                } else if (ch == '\n') {
-//                    buf.append("\n");
-//                } else {
-//                    buf.append("^").appendCodePoint(ch + 64);
-//                }
-//            });
-//        }
-//        return buf.toString();
-//	}
 }

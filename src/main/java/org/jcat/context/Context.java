@@ -1,20 +1,22 @@
 package org.jcat.context;
 
-public class FileContext {
-    private CommandContext context;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class Context {
 
     private String linePrevious = null;
     private String lineCurrent = null;
+    private AtomicLong lineNum;
 
-    public FileContext() {
+    public Context() {
     }
 
-    public FileContext(CommandContext context) {
+    public Context(AtomicLong lineNum) {
         this();
-        this.context = context;
+        this.lineNum = lineNum;
     }
 
-    public void addLine(String line) {
+    public void rotate(String line) {
         if (lineCurrent == null) {
             lineCurrent = line;
         } else {
@@ -32,10 +34,10 @@ public class FileContext {
     }
 
     public long getLineNum() {
-        return context.getLineNum();
+        return lineNum.longValue();
     }
 
     public long incrementLineNum() {
-        return context.incrementLineNum();
+        return lineNum.incrementAndGet();
     }
 }

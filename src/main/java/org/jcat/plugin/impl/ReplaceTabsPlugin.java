@@ -2,7 +2,7 @@ package org.jcat.plugin.impl;
 
 import java.util.regex.Pattern;
 
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
 public class ReplaceTabsPlugin extends AbstractReplacePlugin {
@@ -14,7 +14,7 @@ public class ReplaceTabsPlugin extends AbstractReplacePlugin {
     }
 
     @Override
-    public String replaceLine(FileContext context, String src) {
+    public String replaceLine(Context context, String src) {
         return PATTERN_TABS.matcher(src).replaceAll("^I");
     }
     

@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jcat.cmd.CatOption;
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 import org.jcat.output.IOutput;
 
 /**
@@ -55,7 +55,7 @@ public class PluginHolder {
         }
     }
 
-    public String replace(FileContext context, String line) {
+    public String replace(Context context, String line) {
         for (IReplacePlugin plugin : replacePlugins) {
             line = plugin.replace(context, line);
         }

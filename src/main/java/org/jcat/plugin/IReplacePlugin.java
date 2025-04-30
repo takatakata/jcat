@@ -1,7 +1,7 @@
 package org.jcat.plugin;
 
-import org.jcat.context.FileContext;
+import org.jcat.context.Context;
 
 public interface IReplacePlugin extends IPlugin {
-    public String replace(FileContext context, String src);
+    public String replace(Context context, String src);
 }
