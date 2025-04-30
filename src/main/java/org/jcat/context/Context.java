@@ -2,53 +2,51 @@ package org.jcat.context;
 
 public class Context {
 
-	private Long lineNum = 0L;
-	private String lineCurrent = null;
-	private String linePrevious = null;
-	private boolean linePreviousLastCharLF = false;
-	private boolean lineCurrentLastCharLF = true;
+    private Long lineNum = 0L;
+    private String current = null;
+    private String previous = null;
+    private boolean previousHasLF = false;
+    private boolean currentHasLF = true;
 
-	public Context() {
-		linePrevious = null;
-		lineCurrent = null;
-		linePreviousLastCharLF = true;
-		lineCurrentLastCharLF = false;
-	}
+    public Context() {
+        previous = null;
+        current = null;
+        previousHasLF = true;
+        currentHasLF = false;
+    }
 
-	public void rotateLine(String line) {
-		if (lineCurrent == null) {
-			lineCurrent = line;
-		} else {
-			linePrevious = lineCurrent;
-			lineCurrent = line;
-		}
-		linePreviousLastCharLF = lineCurrentLastCharLF;
-		lineCurrentLastCharLF = (lineCurrent.length() > 0 && lineCurrent.charAt(lineCurrent.length() - 1) == '\n')
-				? true
-				: false;
-	}
+    public void rotate(String line) {
+        if (current == null) {
+            current = line;
+        } else {
+            previous = current;
+            current = line;
+        }
+        previousHasLF = currentHasLF;
+        currentHasLF = (current.length() > 0 && current.charAt(current.length() - 1) == '\n') ? true : false;
+    }
 
-	public String getLinePrevious() {
-		return linePrevious;
-	}
+    public String getPrevious() {
+        return previous;
+    }
 
-	public String getLineCurrent() {
-		return lineCurrent;
-	}
+    public String getCurrent() {
+        return current;
+    }
 
-	public long getLineNum() {
-		return lineNum.longValue();
-	}
+    public long getLineNum() {
+        return lineNum.longValue();
+    }
 
-	public long incrementLineNum() {
-		return lineNum = lineNum + 1;
-	}
+    public long incrementLineNum() {
+        return lineNum = lineNum + 1;
+    }
 
-	public boolean isLinePreviouLastCharLF() {
-		return linePreviousLastCharLF;
-	}
+    public boolean isPreviousHasLF() {
+        return previousHasLF;
+    }
 
-	public boolean isLineCurrentLastCharLF() {
-		return lineCurrentLastCharLF;
-	}
+    public boolean isCurrentHasLF() {
+        return currentHasLF;
+    }
 }

@@ -52,7 +52,7 @@ public class PluginHolder {
 
     public String replace(Context context, String line) {
     	//改行を含まない部分を対象にReplacePluginによる置き換えを行う
-    	String contents = line.substring(0, context.isLineCurrentLastCharLF() ? line.length() - 1 : line.length());
+    	String contents = line.substring(0, context.isCurrentHasLF() ? line.length() - 1 : line.length());
         for (IReplacePlugin plugin : replacePlugins) {
         	contents = plugin.replace(context, contents);
         }
@@ -61,6 +61,6 @@ public class PluginHolder {
     		return null;
     	}
     	//行末の改行文字を復元して結果を返す
-        return contents + (context.isLineCurrentLastCharLF() ? "\n" : "");
+        return contents + (context.isCurrentHasLF() ? "\n" : "");
     }
 }

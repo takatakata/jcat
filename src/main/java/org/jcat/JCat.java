@@ -9,7 +9,6 @@ import org.jcat.input.FileInput;
 import org.jcat.input.IInput;
 import org.jcat.output.FileOutput;
 import org.jcat.output.IOutput;
-import org.jcat.output.StandardOutput;
 import org.jcat.plugin.IReplacePlugin;
 import org.jcat.plugin.IUsagePlugin;
 import org.jcat.plugin.PluginHolder;
@@ -57,22 +56,13 @@ public class JCat {
         this(options);
         this.externalOutput = externalOutput;
     }
-    
 
     public void exec() throws IOException {
         IOutput output = null;
         try {
-            if (externalOutput == null) {
-                output = new StandardOutput("\n");
-            } else {
-                output = new FileOutput(externalOutput, "\n");
-            }
-            if (options.isUsageEnabled()) {
-                usage(output);
-            }
-            if (options.isCatEnabled()) {
-                cat(output);
-            }
+            output = new FileOutput(externalOutput, "\n");
+            usage(output);
+            cat(output);
         } finally {
             output.flush();
             if (externalOutput == null) {
@@ -82,21 +72,27 @@ public class JCat {
     }
 
     private void usage(IOutput output) throws IOException {
+        if (!options.isUsageEnabled()) {
+            return;
+        }
         plugins.usage(output);
     }
 
     private void cat(IOutput output) throws IOException {
-    	Context context = new Context();
+        if (!options.isCatEnabled()) {
+            return;
+        }
+        Context context = new Context();
         for (String path : options.getFileList()) {
             String line;
             try (IInput input = new FileInput(path)) {
                 while ((line = input.read()) != null) {
-                    context.rotateLine(line);
+                    context.rotate(line);
                     line = plugins.replace(context, line);
                     if (line == null) {
-                    	//nullの場合は出力しない（連続空白行など）
-                    	continue;
-                    }  
+                        //nullの場合は出力しない（連続空白行など）
+                        continue;
+                    }
                     output.write(line);
                 }
             }

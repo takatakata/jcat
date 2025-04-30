@@ -7,7 +7,7 @@ import java.io.OutputStream;
 
 public class FileOutput extends AbstractOutput {
 
-    public FileOutput() {
+    public FileOutput() throws FileNotFoundException {
         super();
     }
 

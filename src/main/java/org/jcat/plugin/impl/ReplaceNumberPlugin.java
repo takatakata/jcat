@@ -17,7 +17,7 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
     	if (context.getLineNum() == 0) {
 			//最初の1行目の場合は行番号を出力する
 			;
-		} else if (!context.isLinePreviouLastCharLF()) {
+		} else if (!context.isPreviousHasLF()) {
 			//前回改行が含まれなかったときはまだ行の途中であるため行番号を付加しない
 			return src;
 		}
