@@ -7,9 +7,9 @@ import java.io.InputStream;
 import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
-public class ReplaceShowNonPrintingPlugin extends AbstractReplacePlugin {
+public class ShowNonPrintingPlugin extends AbstractReplacePlugin {
 
-    public ReplaceShowNonPrintingPlugin() {
+    public ShowNonPrintingPlugin() {
     	super();
     }
 

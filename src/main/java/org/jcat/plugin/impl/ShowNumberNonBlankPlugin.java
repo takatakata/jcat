@@ -6,15 +6,18 @@ import org.jcat.plugin.AbstractReplacePlugin;
 /**
  * FIXME: 制約事項：999,999行を超える場合行番号が「%6d」に収まらない
  */
-public class ReplaceNumberPlugin extends AbstractReplacePlugin {
+public class ShowNumberNonBlankPlugin extends AbstractReplacePlugin {
 
-    public ReplaceNumberPlugin() {
-    	super();
-    }
+	public ShowNumberNonBlankPlugin() {
+		super();
+	}
 
-    @Override
-    public String replaceLine(Context context, String src) {
-    	if (context.getLineNum() == 0) {
+	@Override
+	public String replaceLine(Context context, String src) {
+		if ("".equals(src)) {
+			//現在行が空行のときは行番号を付加しない
+			return src;
+		} else if (context.getLineNum() == 0) {
 			//最初の1行目の場合は行番号を出力する
 			;
 		} else if (!context.isPreviousHasLF()) {
@@ -23,10 +26,10 @@ public class ReplaceNumberPlugin extends AbstractReplacePlugin {
 		}
 		context.incrementLineNum();
 		return String.format("%6d\t", context.getLineNum()) + src;
-    }
-    
+	}
+
 	@Override
 	public boolean isEnabled() {
-		return option.isNumber();
+		return option.isShowNumberNonBlank();
 	}
 }

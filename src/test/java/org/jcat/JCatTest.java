@@ -38,7 +38,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testHelp() throws IOException {
+    public void testUsageHelp() throws IOException {
         String options[] = new String[] { "--help" };
         String result[] = retreiveCatAndJCat(options);
         assertNotSame(result[0], result[1]);
@@ -49,7 +49,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testVersion() throws IOException {
+    public void testUsageVersion() throws IOException {
         String options[] = new String[] { "--version" };
         String result[] = retreiveCatAndJCat(options);
         assertNotSame(result[0], result[1]);
@@ -71,7 +71,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testNumberShortOption() throws IOException {
+    public void testShowNumberShortOption() throws IOException {
         String options[] = new String[] { "-n" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
@@ -82,7 +82,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testNumberLongOption() throws IOException {
+    public void testShowNumberLongOption() throws IOException {
         String options[] = new String[] { "--number" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
@@ -93,7 +93,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testNumberNonblankShortOption() throws IOException {
+    public void testShowNumberNonblankShortOption() throws IOException {
         String options[] = new String[] { "-b" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
@@ -104,7 +104,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testNumberNonblankLongOption() throws IOException {
+    public void testShowNumberNonblankLongOption() throws IOException {
         String options[] = new String[] { "--number-nonblank" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
@@ -115,7 +115,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testNumberSqueezeShortOption() throws IOException {
+    public void testShowNumberSqueezeShortOption() throws IOException {
         String options[] = new String[] { "-s" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);
@@ -126,7 +126,7 @@ public class JCatTest extends TestCase {
      * 
      * @throws IOException 
      */
-    public void testNumberSqueezeLongOption() throws IOException {
+    public void testShowNumberSqueezeLongOption() throws IOException {
         String options[] = new String[] { "--squeeze-blank" };
         String result[] = retreiveCatAndJCat(options);
         assertEquals(result[0], result[1]);

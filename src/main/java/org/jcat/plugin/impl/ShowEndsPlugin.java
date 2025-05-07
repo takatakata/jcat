@@ -3,9 +3,9 @@ package org.jcat.plugin.impl;
 import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
-public class ReplaceEndsPlugin extends AbstractReplacePlugin {
+public class ShowEndsPlugin extends AbstractReplacePlugin {
 
-    public ReplaceEndsPlugin() {
+    public ShowEndsPlugin() {
     	super();
     }
 

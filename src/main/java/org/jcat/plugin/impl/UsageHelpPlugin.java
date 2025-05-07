@@ -42,6 +42,6 @@ public class UsageHelpPlugin extends AbstractUsagePlugin {
 
 	@Override
 	public boolean isEnabled() {
-		return option.isShowHelp();
+		return option.isUsageHelp();
 	}
 }

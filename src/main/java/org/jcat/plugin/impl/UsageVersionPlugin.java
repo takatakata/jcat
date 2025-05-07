@@ -26,6 +26,6 @@ public class UsageVersionPlugin extends AbstractUsagePlugin {
 	
 	@Override
 	public boolean isEnabled() {
-		return option.isShowVersion();
+		return option.isUsageVersion();
 	}
 }

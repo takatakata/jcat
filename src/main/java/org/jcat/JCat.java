@@ -12,12 +12,12 @@ import org.jcat.output.IOutput;
 import org.jcat.plugin.IReplacePlugin;
 import org.jcat.plugin.IUsagePlugin;
 import org.jcat.plugin.PluginHolder;
-import org.jcat.plugin.impl.ReplaceEndsPlugin;
-import org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin;
-import org.jcat.plugin.impl.ReplaceNumberPlugin;
-import org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin;
-import org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin;
-import org.jcat.plugin.impl.ReplaceTabsPlugin;
+import org.jcat.plugin.impl.ShowEndsPlugin;
+import org.jcat.plugin.impl.ShowNumberNonBlankPlugin;
+import org.jcat.plugin.impl.ShowNumberPlugin;
+import org.jcat.plugin.impl.ShowNonPrintingPlugin;
+import org.jcat.plugin.impl.ShowSqueezeBlankPlugin;
+import org.jcat.plugin.impl.ShowTabsPlugin;
 import org.jcat.plugin.impl.UsageHelpPlugin;
 import org.jcat.plugin.impl.UsageVersionPlugin;
 
@@ -43,12 +43,12 @@ public class JCat {
         });
 
         this.plugins.addReplacePlugin(new IReplacePlugin[] {
-                new ReplaceEndsPlugin(),
-                new ReplaceNumberNonBlankPlugin(),
-                new ReplaceNumberPlugin(),
-                new ReplaceSqueezeBlankPlugin(),
-                new ReplaceTabsPlugin(),
-                new ReplaceShowNonPrintingPlugin()
+                new ShowEndsPlugin(),
+                new ShowNumberNonBlankPlugin(),
+                new ShowNumberPlugin(),
+                new ShowSqueezeBlankPlugin(),
+                new ShowTabsPlugin(),
+                new ShowNonPrintingPlugin()
         });
     }
 

@@ -1,4 +1,9 @@
 @startuml
+class org.jcat.plugin.impl.ShowNonPrintingPlugin {
++ String replaceLine(Context,String)
++ boolean isEnabled()
+}
+
 abstract class org.jcat.output.AbstractOutput {
 # String encode
 # String lineFeed
@@ -15,6 +20,11 @@ abstract class org.jcat.output.AbstractOutput {
 }
 
 
+class org.jcat.plugin.impl.ShowNumberNonBlankPlugin {
++ String replaceLine(Context,String)
++ boolean isEnabled()
+}
+
 class org.jcat.input.FileInput {
 }
 class org.jcat.context.Context {
@@ -27,12 +37,7 @@ class org.jcat.context.Context {
 + boolean isCurrentHasLF()
 }
 
-class org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin {
-+ String replaceLine(Context,String)
-+ boolean isEnabled()
-}
-
-class org.jcat.plugin.impl.ReplaceTabsPlugin {
+class org.jcat.plugin.impl.ShowTabsPlugin {
 + String replaceLine(Context,String)
 + boolean isEnabled()
 }
@@ -55,16 +60,6 @@ interface org.jcat.input.IInput {
 
 class org.jcat.plugin.impl.UsageHelpPlugin {
 + void show(IOutput)
-+ boolean isEnabled()
-}
-
-class org.jcat.plugin.impl.ReplaceNumberPlugin {
-+ String replaceLine(Context,String)
-+ boolean isEnabled()
-}
-
-class org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin {
-+ String replaceLine(Context,String)
 + boolean isEnabled()
 }
 
@@ -108,28 +103,33 @@ class org.jcat.JCat {
 + {static} void main(String[])
 }
 
-interface org.jcat.plugin.IReplacePlugin {
-+ String replace(Context,String)
-}
-
-class org.jcat.output.StandardOutput {
-}
-class org.jcat.plugin.impl.ReplaceEndsPlugin {
+class org.jcat.plugin.impl.ShowEndsPlugin {
 + String replaceLine(Context,String)
 + boolean isEnabled()
 }
 
+interface org.jcat.plugin.IReplacePlugin {
++ String replace(Context,String)
+}
+
+class org.jcat.plugin.impl.ShowSqueezeBlankPlugin {
++ String replaceLine(Context,String)
++ boolean isEnabled()
+}
+
+class org.jcat.output.StandardOutput {
+}
 class org.jcat.JCatTest {
 + {static} Test suite()
-+ void testHelp()
-+ void testVersion()
++ void testUsageHelp()
++ void testUsageVersion()
 + void testNothingOptions()
-+ void testNumberShortOption()
-+ void testNumberLongOption()
-+ void testNumberNonblankShortOption()
-+ void testNumberNonblankLongOption()
-+ void testNumberSqueezeShortOption()
-+ void testNumberSqueezeLongOption()
++ void testShowNumberShortOption()
++ void testShowNumberLongOption()
++ void testShowNumberNonblankShortOption()
++ void testShowNumberNonblankLongOption()
++ void testShowNumberSqueezeShortOption()
++ void testShowNumberSqueezeLongOption()
 + void testShowTabsShortOption()
 + void testShowTabsLongOption()
 + void testShowEndsShortOption()
@@ -150,15 +150,20 @@ class org.jcat.cmd.CatOption {
 + List<String> getFileList()
 + void addFileList(String)
 + boolean isShowAll()
-+ boolean isNumberNonBlank()
++ boolean isShowNumberNonBlank()
 + boolean isShowEnds()
-+ boolean isNumber()
-+ boolean isSqueezeBlank()
++ boolean isShowNumber()
++ boolean isShowSqueezeBlank()
 + boolean isShowTabs()
 + boolean isIgnored()
 + boolean isShowNonPrinting()
-+ boolean isShowHelp()
-+ boolean isShowVersion()
++ boolean isUsageHelp()
++ boolean isUsageVersion()
+}
+
+class org.jcat.plugin.impl.ShowNumberPlugin {
++ String replaceLine(Context,String)
++ boolean isEnabled()
 }
 
 interface org.jcat.output.IOutput {
@@ -186,35 +191,30 @@ class org.jcat.plugin.impl.UsageVersionPlugin {
 
 class org.jcat.input.StandardInput {
 }
-class org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin {
-+ String replaceLine(Context,String)
-+ boolean isEnabled()
-}
 
 
-
+org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ShowNonPrintingPlugin
 org.jcat.output.IOutput <|.. org.jcat.output.AbstractOutput
+org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ShowNumberNonBlankPlugin
 org.jcat.input.AbstractInput <|-- org.jcat.input.FileInput
-org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceShowNonPrintingPlugin
-org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceTabsPlugin
+org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ShowTabsPlugin
 org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IUsagePlugin
 java.io.Closeable <|-- org.jcat.input.IInput
 org.jcat.plugin.AbstractUsagePlugin <|-- org.jcat.plugin.impl.UsageHelpPlugin
-org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceNumberPlugin
-org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceNumberNonBlankPlugin
 org.jcat.output.AbstractOutput <|-- org.jcat.output.FileOutput
 org.jcat.plugin.IReplacePlugin <|.. org.jcat.plugin.AbstractReplacePlugin
 org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.AbstractReplacePlugin
 org.jcat.input.IInput <|.. org.jcat.input.AbstractInput
 org.jcat.plugin.IUsagePlugin <|.. org.jcat.plugin.AbstractUsagePlugin
 org.jcat.plugin.AbstractPlugin <|-- org.jcat.plugin.AbstractUsagePlugin
+org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ShowEndsPlugin
 org.jcat.plugin.IPlugin <|-- org.jcat.plugin.IReplacePlugin
+org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ShowSqueezeBlankPlugin
 org.jcat.output.AbstractOutput <|-- org.jcat.output.StandardOutput
-org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceEndsPlugin
 junit.framework.TestCase <|-- org.jcat.JCatTest
+org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ShowNumberPlugin
 java.io.Closeable <|-- org.jcat.output.IOutput
 org.jcat.plugin.IPlugin <|.. org.jcat.plugin.AbstractPlugin
 org.jcat.plugin.AbstractUsagePlugin <|-- org.jcat.plugin.impl.UsageVersionPlugin
 org.jcat.input.AbstractInput <|-- org.jcat.input.StandardInput
-org.jcat.plugin.AbstractReplacePlugin <|-- org.jcat.plugin.impl.ReplaceSqueezeBlankPlugin
 @enduml

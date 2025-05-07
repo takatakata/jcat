@@ -3,9 +3,9 @@ package org.jcat.plugin.impl;
 import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
-public class ReplaceSqueezeBlankPlugin extends AbstractReplacePlugin {
+public class ShowSqueezeBlankPlugin extends AbstractReplacePlugin {
 
-    public ReplaceSqueezeBlankPlugin() {
+    public ShowSqueezeBlankPlugin() {
         super();
     }
 
@@ -19,6 +19,6 @@ public class ReplaceSqueezeBlankPlugin extends AbstractReplacePlugin {
 
     @Override
     public boolean isEnabled() {
-        return option.isSqueezeBlank();
+        return option.isShowSqueezeBlank();
     }
 }

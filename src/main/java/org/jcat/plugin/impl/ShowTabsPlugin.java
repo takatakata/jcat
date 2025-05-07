@@ -5,11 +5,11 @@ import java.util.regex.Pattern;
 import org.jcat.context.Context;
 import org.jcat.plugin.AbstractReplacePlugin;
 
-public class ReplaceTabsPlugin extends AbstractReplacePlugin {
+public class ShowTabsPlugin extends AbstractReplacePlugin {
 
     private static final Pattern PATTERN_TABS = Pattern.compile("\t");
 
-    public ReplaceTabsPlugin() {
+    public ShowTabsPlugin() {
     	super();
     }
 

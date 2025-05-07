@@ -5,15 +5,15 @@ import java.util.List;
 
 public class CatOption {
     private boolean showAll = false;
-    private boolean numberNonBlank = false;
+    private boolean showNumberNonBlank = false;
     private boolean showEnds = false;
-    private boolean number = false;
-    private boolean squeezeBlank = false;
+    private boolean showNumber = false;
+    private boolean showSqueezeBlank = false;
     private boolean showTabs = false;
-    private boolean ignored = false;
     private boolean showNonPrinting = false;
-    private boolean showHelp = false;
-    private boolean showVersion = false;
+    private boolean usageHelp = false;
+    private boolean usageVersion = false;
+    private boolean ignored = false;
     private List<String> fileList = new ArrayList<>();
 
     public CatOption() {
@@ -34,11 +34,11 @@ public class CatOption {
                 addFileList(option);
             }
         }
-        if( isShowHelp() && isShowVersion() ) {
+        if( isUsageHelp() && isUsageVersion() ) {
             if (String.join(",", options).matches(".*--help.*--version.*")) {
-                showVersion = false;
+                usageVersion = false;
             } else {
-                showHelp = false;
+                usageHelp = false;
             }
         }
     }
@@ -58,10 +58,10 @@ public class CatOption {
             showNonPrinting = true;
             break;
         case "-b":
-            numberNonBlank = true;
+            showNumberNonBlank = true;
             break;
         case "--number-nonblank":
-            numberNonBlank = true;
+            showNumberNonBlank = true;
             break;
         case "-e":
             showNonPrinting = true;
@@ -74,16 +74,16 @@ public class CatOption {
             showEnds = true;
             break;
         case "-n":
-            number = true;
+            showNumber = true;
             break;
         case "--number":
-            number = true;
+            showNumber = true;
             break;
         case "-s":
-            squeezeBlank = true;
+            showSqueezeBlank = true;
             break;
         case "--squeeze-blank":
-            squeezeBlank = true;
+            showSqueezeBlank = true;
             break;
         case "-T":
             showTabs = true;
@@ -105,10 +105,10 @@ public class CatOption {
             ignored = true;
             break;
         case "--help":
-            showHelp = true;
+            usageHelp = true;
             break;
         case "--version":
-            showVersion = true;
+            usageVersion = true;
             break;
         default:
             addFileList(option);
@@ -117,7 +117,7 @@ public class CatOption {
     }
 
     public boolean isUsageEnabled() {
-        return isShowHelp() || isShowVersion();
+        return isUsageHelp() || isUsageVersion();
     }
 
     public boolean isCatEnabled() {
@@ -136,20 +136,20 @@ public class CatOption {
         return showAll;
     }
 
-    public boolean isNumberNonBlank() {
-        return numberNonBlank;
+    public boolean isShowNumberNonBlank() {
+        return showNumberNonBlank;
     }
 
     public boolean isShowEnds() {
         return showEnds;
     }
 
-    public boolean isNumber() {
-        return number;
+    public boolean isShowNumber() {
+        return showNumber;
     }
 
-    public boolean isSqueezeBlank() {
-        return squeezeBlank;
+    public boolean isShowSqueezeBlank() {
+        return showSqueezeBlank;
     }
 
     public boolean isShowTabs() {
@@ -164,12 +164,12 @@ public class CatOption {
         return showNonPrinting;
     }
 
-    public boolean isShowHelp() {
-        return showHelp;
+    public boolean isUsageHelp() {
+        return usageHelp;
     }
 
-    public boolean isShowVersion() {
-        return showVersion;
+    public boolean isUsageVersion() {
+        return usageVersion;
     }
 
 }
