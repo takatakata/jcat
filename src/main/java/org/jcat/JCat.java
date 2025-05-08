@@ -11,7 +11,7 @@ import org.jcat.output.FileOutput;
 import org.jcat.output.IOutput;
 import org.jcat.plugin.IReplacePlugin;
 import org.jcat.plugin.IUsagePlugin;
-import org.jcat.plugin.PluginHolder;
+import org.jcat.plugin.PluginManager;
 import org.jcat.plugin.impl.ShowEndsPlugin;
 import org.jcat.plugin.impl.ShowNumberNonBlankPlugin;
 import org.jcat.plugin.impl.ShowNumberPlugin;
@@ -29,20 +29,20 @@ public class JCat {
     private static final int EXIT_FAILURE = 1;
 
     private CatOption options;
-    private PluginHolder plugins;
+    private PluginManager pluginManager;
     private OutputStream externalOutput;
 
     public JCat(String[] commands) {
 
         this.options = new CatOption(commands);
-        this.plugins = new PluginHolder(options);
+        this.pluginManager = new PluginManager(options);
 
-        this.plugins.addUsagePlugin(new IUsagePlugin[] {
+        this.pluginManager.addUsagePlugin(new IUsagePlugin[] {
                 new UsageHelpPlugin(),
                 new UsageVersionPlugin()
         });
 
-        this.plugins.addReplacePlugin(new IReplacePlugin[] {
+        this.pluginManager.addReplacePlugin(new IReplacePlugin[] {
                 new ShowEndsPlugin(),
                 new ShowNumberNonBlankPlugin(),
                 new ShowNumberPlugin(),
@@ -75,7 +75,7 @@ public class JCat {
         if (!options.isUsageEnabled()) {
             return;
         }
-        plugins.usage(output);
+        pluginManager.usage(output);
     }
 
     private void cat(IOutput output) throws IOException {
@@ -88,7 +88,7 @@ public class JCat {
             try (IInput input = new FileInput(path)) {
                 while ((line = input.read()) != null) {
                     context.rotate(line);
-                    line = plugins.replace(context, line);
+                    line = pluginManager.replace(context, line);
                     if (line == null) {
                         //nullの場合は出力しない（連続空白行など）
                         continue;

@@ -12,16 +12,16 @@ import org.jcat.output.IOutput;
 /**
  * プラグイン管理用クラス。
  */
-public class PluginHolder {
+public class PluginManager {
 
     protected CatOption option;
     protected Set<IReplacePlugin> replacePlugins = new LinkedHashSet<>();
     protected Set<IUsagePlugin> usagePlugins = new LinkedHashSet<>();
 
-    public PluginHolder() {
+    public PluginManager() {
     }
 
-    public PluginHolder(CatOption option) {
+    public PluginManager(CatOption option) {
         this();
         this.option = option;
     }

@@ -63,17 +63,6 @@ class org.jcat.plugin.impl.UsageHelpPlugin {
 + boolean isEnabled()
 }
 
-class org.jcat.plugin.PluginHolder {
-# CatOption option
-# Set<IReplacePlugin> replacePlugins
-# Set<IUsagePlugin> usagePlugins
-+ void addReplacePlugin(IReplacePlugin[])
-+ void addUsagePlugin(IUsagePlugin[])
-+ void usage(IOutput)
-+ String replace(Context,String)
-}
-
-
 class org.jcat.output.FileOutput {
 }
 abstract class org.jcat.plugin.AbstractReplacePlugin {
@@ -116,6 +105,17 @@ class org.jcat.plugin.impl.ShowSqueezeBlankPlugin {
 + String replaceLine(Context,String)
 + boolean isEnabled()
 }
+
+class org.jcat.plugin.PluginManager {
+# CatOption option
+# Set<IReplacePlugin> replacePlugins
+# Set<IUsagePlugin> usagePlugins
++ void addReplacePlugin(IReplacePlugin[])
++ void addUsagePlugin(IUsagePlugin[])
++ void usage(IOutput)
++ String replace(Context,String)
+}
+
 
 class org.jcat.output.StandardOutput {
 }
